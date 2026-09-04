@@ -44,7 +44,7 @@ if st.button("▶️ Esegui", key="esplora_run"):
         con = duckdb.connect()
         result = con.execute(sql).fetchdf()
         st.success(f"{len(result)} righe")
-        st.dataframe(result, width="stretch", height=min(len(result) * 35 + 40, 600))
+        st.dataframe(result, use_container_width=True, height=min(len(result) * 35 + 40, 600))
 
         # Download CSV
         csv = result.to_csv(index=False)

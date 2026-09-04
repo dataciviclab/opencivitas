@@ -44,6 +44,8 @@ clean:
     - join_enti_ok
   validate:
     min_rows: 5000
+    primary_key:
+      - "username"
     not_null:
       - "username"
 
@@ -73,3 +75,6 @@ mart:
 
 validation:
   fail_on_error: true
+
+output:
+  artifacts: "standard"

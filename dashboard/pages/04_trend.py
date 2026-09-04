@@ -35,13 +35,13 @@ fig.add_trace(go.Scatter(x=agg["anno"], y=agg["pct_A"], name="A: spesa+ servizi+
 fig.add_trace(go.Scatter(x=agg["anno"], y=agg["pct_C"], name="C: spesa- servizi-", line=dict(color="#f39c12")))
 fig.add_trace(go.Scatter(x=agg["anno"], y=agg["pct_B"], name="B: spesa+ servizi-", line=dict(color="#e74c3c")))
 fig.update_layout(height=400, yaxis_title="% comuni", xaxis_title="Anno", legend=dict(x=0, y=1.1, orientation="h"))
-st.plotly_chart(fig, width="stretch")
+st.plotly_chart(fig, use_container_width=True)
 
 # ── Tabella riassuntiva ────────────────────────────────────────────────
 st.dataframe(agg.rename(columns={
     "anno": "Anno", "n": "N comuni",
     "pct_A": "A%", "pct_B": "B%", "pct_C": "C%", "pct_D": "D%"
-}), hide_index=True, width="stretch")
+}), hide_index=True, use_container_width=True)
 
 # ── Spesa media nel tempo ───────────────────────────────────────────────
 st.markdown("---")
@@ -56,13 +56,13 @@ fig2 = go.Figure()
 fig2.add_trace(go.Scatter(x=agg2["anno"], y=agg2["std"], name="Standard €/ab", line=dict(color="#3498db")))
 fig2.add_trace(go.Scatter(x=agg2["anno"], y=agg2["stor"], name="Storica €/ab", line=dict(color="#2ecc71")))
 fig2.update_layout(height=350, yaxis_title="€/abitante", legend=dict(x=0, y=1.1, orientation="h"))
-st.plotly_chart(fig2, width="stretch")
+st.plotly_chart(fig2, use_container_width=True)
 
 # ── Servizi nel tempo ───────────────────────────────────────────────────
 st.subheader("Livello servizi medio")
 fig3 = go.Figure()
 fig3.add_trace(go.Scatter(x=agg2["anno"], y=agg2["sv"], name="Servizi", line=dict(color="#e74c3c"), fill="tozeroy"))
 fig3.update_layout(height=250, yaxis_title="0-10", yaxis_range=[0, 10])
-st.plotly_chart(fig3, width="stretch")
+st.plotly_chart(fig3, use_container_width=True)
 
 st.caption(f"Fonte: OpenCivitas (ANCI/Sogei) · CC BY 4.0")

@@ -74,7 +74,7 @@ with cg1:
     fig.add_trace(go.Bar(x=["Standard"], y=[std], name="Standard", marker_color="#3498db"))
     fig.add_trace(go.Bar(x=["Storica"], y=[stor], name="Storica", marker_color="#2ecc71" if stor <= std else "#e74c3c"))
     fig.update_layout(height=300, margin=dict(l=0, r=0, t=10, b=0), yaxis_title="€/abitante", showlegend=False)
-    st.plotly_chart(fig, width="stretch")
+    st.plotly_chart(fig, use_container_width=True)
 
 with cg2:
     st.subheader("Coordinate Performance")
@@ -88,7 +88,7 @@ with cg2:
     fig2.update_layout(height=300, margin=dict(l=0, r=0, t=10, b=0),
                        xaxis_title="Spesa (← bassa | alta →)", yaxis_title="Servizi (↓ bassi | alti ↑)",
                        xaxis_range=[-6, 6], yaxis_range=[-6, 6])
-    st.plotly_chart(fig2, width="stretch")
+    st.plotly_chart(fig2, use_container_width=True)
 
 # ── FSC (se disponibile) ────────────────────────────────────────────────
 if pd.notna(row.get("capacita_fiscale_procapite")):
@@ -119,7 +119,7 @@ if not df_all.empty:
             yaxis2=dict(title="Servizi (0-10)", overlaying="y", side="right", range=[0, 10]),
             legend=dict(x=0, y=1.1, orientation="h"),
         )
-        st.plotly_chart(fig3, width="stretch")
+        st.plotly_chart(fig3, use_container_width=True)
     else:
         st.caption("Nessun dato trend disponibile per questo comune.")
 
@@ -132,6 +132,6 @@ show_cols = ["anno", "popolazione", "spesa_standard_procapite", "spesa_storica_p
              "capacita_fiscale_procapite", "fondo_perequativo_procapite", "dotazione_finale_fsc_procapite"]
 show_cols = [c for c in show_cols if c in trend.columns] if not trend.empty else []
 if show_cols and not trend.empty:
-    st.dataframe(trend[show_cols].reset_index(drop=True), width="stretch")
+    st.dataframe(trend[show_cols].reset_index(drop=True), use_container_width=True)
 
 st.caption(f"Fonte: OpenCivitas (ANCI/Sogei) · CC BY 4.0")

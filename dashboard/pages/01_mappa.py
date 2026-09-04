@@ -101,7 +101,7 @@ fig.update_layout(
     height=500,
     paper_bgcolor="rgba(0,0,0,0)",
 )
-st.plotly_chart(fig, width="stretch")
+st.plotly_chart(fig, use_container_width=True)
 
 # ── Statistiche regionali ──────────────────────────────────────────────
 st.markdown("---")
@@ -112,13 +112,13 @@ if metrica == "Quadrant":
         "pct_efficiente", ascending=False
     )
     show.columns = ["Regione", "Comuni", "% Efficienti (D)", "% Sottofinanziati (C)", "% Spreco (B)"]
-    st.dataframe(show.reset_index(drop=True), width="stretch", height=500,
+    st.dataframe(show.reset_index(drop=True), use_container_width=True, height=500,
                  column_config={c: st.column_config.NumberColumn(c, format="%.1f%%") for c in show.columns[2:]})
 else:
     st.subheader(f"Ranking regioni — {metrica}")
     show = agg[["regione", "media", "n_comuni"]].sort_values("media", ascending=False)
     show.columns = ["Regione", metrica, "Comuni"]
-    st.dataframe(show.reset_index(drop=True), width="stretch", height=500)
+    st.dataframe(show.reset_index(drop=True), use_container_width=True, height=500)
 
 st.caption(f"Anno: {year} · Fonte: OpenCivitas (ANCI/Sogei) · CC BY 4.0")
 

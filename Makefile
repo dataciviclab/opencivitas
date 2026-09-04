@@ -41,6 +41,12 @@ check:
 	done
 	@echo "All configs valid"
 
+# --- Dashboard ---
+
+.PHONY: dashboard
+dashboard:
+	cd dashboard && streamlit run app.py
+
 # --- Pulizia ---
 
 .PHONY: clean

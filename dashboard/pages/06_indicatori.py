@@ -86,7 +86,7 @@ with cg1:
     st.subheader("Distribuzione")
     fig = px.histogram(df_valid, x=col_id, nbins=50, color_discrete_sequence=["#3498db"])
     fig.update_layout(height=350, margin=dict(l=0, r=0, t=10, b=0), xaxis_title=metrica_label, yaxis_title="Comuni")
-    st.plotly_chart(fig, width="stretch")
+    st.plotly_chart(fig, use_container_width=True)
 
 with cg2:
     st.subheader("Per regione")
@@ -97,7 +97,7 @@ with cg2:
                   color_continuous_scale="Blues", text="media")
     fig2.update_layout(height=500, margin=dict(l=0, r=0, t=10, b=0), xaxis_title=metrica_label, showlegend=False)
     fig2.update_traces(texttemplate="%.1f", textposition="outside")
-    st.plotly_chart(fig2, width="stretch")
+    st.plotly_chart(fig2, use_container_width=True)
 
 # ── Tabella top/bottom ──────────────────────────────────────────────────
 st.markdown("---")
@@ -108,13 +108,13 @@ with ct1:
     st.subheader(f"🔝 Top {n_show}")
     top = df_valid.nlargest(n_show, col_id)[["comune", "regione", "fascia_popolazione", col_id]]
     top.columns = ["Comune", "Regione", "Fascia", metrica_label]
-    st.dataframe(top.reset_index(drop=True), width="stretch", hide_index=True)
+    st.dataframe(top.reset_index(drop=True), use_container_width=True, hide_index=True)
 
 with ct2:
     st.subheader(f"🔻 Bottom {n_show}")
     bottom = df_valid.nsmallest(n_show, col_id)[["comune", "regione", "fascia_popolazione", col_id]]
     bottom.columns = ["Comune", "Regione", "Fascia", metrica_label]
-    st.dataframe(bottom.reset_index(drop=True), width="stretch", hide_index=True)
+    st.dataframe(bottom.reset_index(drop=True), use_container_width=True, hide_index=True)
 
 # ── Confronto con media nazionale ────────────────────────────────────────
 st.markdown("---")
@@ -133,6 +133,6 @@ fig3 = px.scatter(
 )
 fig3.add_hline(y=0, line_dash="dash", line_color="red")
 fig3.update_layout(height=400, margin=dict(l=0, r=0, t=10, b=0), xaxis=dict(showticklabels=False))
-st.plotly_chart(fig3, width="stretch")
+st.plotly_chart(fig3, use_container_width=True)
 
 st.caption(f"Anno: {year} · Fonte: OpenCivitas (ANCI/Sogei) · CC BY 4.0")

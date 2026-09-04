@@ -74,12 +74,12 @@ show_cols = ["comune", "regione", "fascia_popolazione", "popolazione",
              "spesa_standard_procapite", "spesa_storica_procapite",
              "livello_servizi", "livello_spesa", "quadrante"]
 show_cols = [c for c in show_cols if c in top.columns]
-st.dataframe(top[show_cols].reset_index(drop=True), width="stretch", height=min(n_top * 35 + 40, 600))
+st.dataframe(top[show_cols].reset_index(drop=True), use_container_width=True, height=min(n_top * 35 + 40, 600))
 
 # ── Bottom N ────────────────────────────────────────────────────────────
 st.markdown("---")
 st.subheader(f"🔻 Bottom {n_top}")
 bottom = df_sorted.tail(n_top).sort_values("_rank", ascending=ascending)
-st.dataframe(bottom[show_cols].reset_index(drop=True), width="stretch", height=min(n_top * 35 + 40, 600))
+st.dataframe(bottom[show_cols].reset_index(drop=True), use_container_width=True, height=min(n_top * 35 + 40, 600))
 
 st.caption(f"Anno: {year} · Fonte: OpenCivitas (ANCI/Sogei) · CC BY 4.0")

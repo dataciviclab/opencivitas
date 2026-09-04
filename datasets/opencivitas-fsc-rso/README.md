@@ -1,7 +1,7 @@
 # opencivitas-fsc-rso
 
 Candidate single-source con support — Fondo di Solidarietà Comunale per i
-Comuni delle Regioni a Statuto Ordinario. **Multi-anno: 2022–2025.**
+Comuni delle Regioni a Statuto Ordinario. **Multi-anno: 2017–2025.**
 
 ## Stato
 
@@ -20,12 +20,12 @@ Struttura: candidate principale con support per geografia.
 
 | ID | Fonte | Ruolo | Stato |
 |---|---|---|---|
-| A | FSC {year} variabile-valore | candidate: base principale | ✅ anni 2022–2025 |
+| A | FSC {year} variabile-valore | candidate: base principale | ✅ anni 2017–2025 |
 | B | Metadati enti FSC | support: mapping `USERNAME -> geografia comune` | ✅ fisso (2025) |
 
 Perimetro:
 
-- **2022–2025** (4 annualità)
+- **2017–2025** (8 annualità, escluso 2019)
 - solo RSO (Regioni a Statuto Ordinario)
 - pivot FSC (EAV→wide) + join geografia da support nel CLEAN
 - output CLEAN: 13 colonne wide (include `anno`)
@@ -34,6 +34,10 @@ Perimetro:
 
 | Anno | Comuni | Fonte | Note |
 |:----:|:-----:|-------|------|
+| 2017 | — | OpenCivitas | Formato originale |
+| 2018 | — | OpenCivitas | Formato originale |
+| 2020 | — | OpenCivitas | Formato originale |
+| 2021 | — | OpenCivitas | Formato originale |
 | 2022 | 6.581 | OpenCivitas | Colonna: VAR_FSC_NAME / VAR_FSC_VAL |
 | 2023 | 6.578 | OpenCivitas | Colonna: VAR_FSC_NAME / VAR_FSC_VAL |
 | 2024 | 6.578 | OpenCivitas | Colonna: VAR_FSC_NAME / VAR_FSC_VAL |

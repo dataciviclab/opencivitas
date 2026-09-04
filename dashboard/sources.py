@@ -91,7 +91,8 @@ def load_joined_all() -> pd.DataFrame:
 def query_det(sql: str) -> pd.DataFrame:
     """Esegue SQL sul mart_determinanti (tutti gli anni)."""
     con = duckdb.connect()
-    return con.execute(f"SELECT * FROM read_parquet('{DET_MART}', union_by_name=true)").fetchdf()
+    con.execute(f"CREATE VIEW IF NOT EXISTS _det AS SELECT * FROM read_parquet('{DET_MART}', union_by_name=true)")
+    return con.execute(sql).fetchdf()
 
 
 @st.cache_data(ttl=3600, show_spinner=False)

@@ -6,7 +6,7 @@ import plotly.graph_objects as go
 import pandas as pd
 import duckdb
 
-from sources import INDI_MART, load_indicatori_comuni, YEARS_DET, load_joined
+from sources import load_indicatori_comuni, YEARS_DET, load_joined
 
 st.title("📊 Indicatori")
 st.markdown("Esplorazione delle metriche di performance per servizio.")

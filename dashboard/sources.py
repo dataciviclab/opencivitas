@@ -11,7 +11,7 @@ import pandas as pd
 import streamlit as st
 
 from lab_connectors.duckdb.queries import (
-    load_mart_flat,
+    load_mart_all_years,
     load_mart_table,
     query_clean,
     years_from_registry,
@@ -34,7 +34,7 @@ def load_determinanti(year: int) -> pd.DataFrame:
 
 @st.cache_data(ttl=3600, show_spinner=False)
 def load_determinanti_all() -> pd.DataFrame:
-    return load_mart_flat("opencivitas_determinanti", "mart_determinanti", prefix=PREFIX)
+    return load_mart_all_years("opencivitas_determinanti", "mart_determinanti", YEARS_DET, prefix=PREFIX)
 
 
 @st.cache_data(ttl=3600, show_spinner=False)
@@ -44,7 +44,7 @@ def load_fsc(year: int) -> pd.DataFrame:
 
 @st.cache_data(ttl=3600, show_spinner=False)
 def load_fsc_all() -> pd.DataFrame:
-    return load_mart_flat("opencivitas_fsc_rso", "mart_compose_comuni", prefix=PREFIX)
+    return load_mart_all_years("opencivitas_fsc_rso", "mart_compose_comuni", YEARS_FSC, prefix=PREFIX)
 
 
 @st.cache_data(ttl=3600, show_spinner=False)

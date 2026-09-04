@@ -1,0 +1,8 @@
+out/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.venv/
+.tmp/
+datasets/*/raw_input.csv

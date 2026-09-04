@@ -1,0 +1,29 @@
+name: pipeline
+
+on:
+  pull_request:
+    types: [closed]
+    paths:
+      - "datasets/**"
+      - "support/**"
+      - "Makefile"
+      - ".github/workflows/pipeline.yml"
+  schedule:
+    - cron: "0 6 5 * *"
+  workflow_dispatch:
+
+concurrency:
+  group: opencivitas-pipeline-${{ github.event.pull_request.number || github.ref || 'schedule' }}
+  cancel-in-progress: false
+
+jobs:
+  pipeline:
+    uses: dataciviclab/.github/.github/workflows/pipeline-reusable.yml@main
+    with:
+      repo-slug: opencivitas-intelligence
+      run-command: make run-all
+      extra-env: |
+        DUCKDB_MEMORY_LIMIT=1.5GB
+        DUCKDB_THREADS=2
+        DUCKDB_PRESERVE_INSERTION_ORDER=false
+    secrets: inherit

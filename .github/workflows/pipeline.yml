@@ -20,10 +20,11 @@ jobs:
   pipeline:
     uses: dataciviclab/.github/.github/workflows/pipeline-reusable.yml@main
     with:
-      repo-slug: opencivitas-intelligence
+      repo-slug: opencivitas
       run-command: make run-all
       extra-env: |
         DUCKDB_MEMORY_LIMIT=1.5GB
         DUCKDB_THREADS=2
         DUCKDB_PRESERVE_INSERTION_ORDER=false
+        TOOLKIT_ALLOW_SCRIPT_SOURCE=1
     secrets: inherit

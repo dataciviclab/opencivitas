@@ -7,8 +7,8 @@
     {
       "slug": "opencivitas_determinanti",
       "name": "Opencivitas Determinanti",
-      "description": "",
-      "source": "",
+      "description": "Spesa standard vs storica, performance scores e determinanti demografiche per comune RSO — il TOT aggregato dal RDF OpenCivitas.",
+      "source": "https://www.opencivitas.it/",
       "source_id": "opencivitas",
       "period": {
         "start": 2015,
@@ -247,8 +247,8 @@
     {
       "slug": "opencivitas_fsc_enti_rso",
       "name": "Opencivitas Fsc Enti Rso",
-      "description": "",
-      "source": "",
+      "description": "Anagrafica enti RSO con codice Sogei, provincia e regione — tavola di supporto per join con dataset principali.",
+      "source": "https://www.opencivitas.it/",
       "source_id": "opencivitas",
       "period": {
         "start": 2025,
@@ -310,8 +310,8 @@
     {
       "slug": "opencivitas_fsc_rso",
       "name": "Opencivitas Fsc Rso",
-      "description": "",
-      "source": "",
+      "description": "Finanza comunale FSC: capacità fiscale, fondo perequativo e dotazione finale per comune RSO.",
+      "source": "https://www.opencivitas.it/",
       "source_id": "opencivitas",
       "period": {
         "start": 2017,
@@ -422,8 +422,8 @@
     {
       "slug": "opencivitas_glossario",
       "name": "Opencivitas Glossario",
-      "description": "",
-      "source": "",
+      "description": "Metadati indicatori OpenCivitas: codice, descrizione, tipo, categoria e funzione per ogni indicatore.",
+      "source": "https://www.opencivitas.it/",
       "source_id": "opencivitas",
       "period": {
         "start": 2015,
@@ -499,8 +499,8 @@
     {
       "slug": "opencivitas_indicatori",
       "name": "Opencivitas Indicatori",
-      "description": "",
-      "source": "",
+      "description": "Indicatori di servizio dei comuni RSO su 7 ambiti (rifiuti, istruzione, sociale, viabilità, amministrazione) — formato EAV.",
+      "source": "https://www.opencivitas.it/",
       "source_id": "opencivitas",
       "period": {
         "start": 2015,

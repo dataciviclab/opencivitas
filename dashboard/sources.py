@@ -14,16 +14,39 @@ from lab_connectors.duckdb.queries import (
     load_mart_all_years,
     load_mart_table,
     query_clean,
-    years_from_registry,
 )
 from lab_connectors.registry import load_registry
 
 PREFIX = "opencivitas/"
 
-_registry = load_registry(Path(__file__).parent.parent / "registry" / "registry.json")
-_all_years = years_from_registry(_registry)
-YEARS_DET = sorted(y for y in _all_years if y in range(2015, 2023))
-YEARS_FSC = sorted(y for y in _all_years if y in range(2017, 2026))
+_REPO = Path(__file__).parent.parent
+_registry = load_registry(_REPO / "registry" / "registry.json")
+_MART_ROOT = _REPO / "out" / "data" / "mart"
+
+
+def _years_for(slug: str) -> list[int]:
+    """Anni dal range period del registry (start..end)."""
+    ds = next((d for d in _registry.datasets if d.slug == slug), None)
+    if ds is None or not hasattr(ds, "period") or ds.period is None:
+        return []
+    p = ds.period
+    start = getattr(p, "start", None) or (p.get("start") if isinstance(p, dict) else None)
+    end = getattr(p, "end", None) or (p.get("end") if isinstance(p, dict) else None)
+    if start and end:
+        return list(range(int(start), int(end) + 1))
+    return []
+
+
+def _available_years(slug: str) -> list[int]:
+    """Anni effettivamente disponibili nei mart parquet (locale o GCS)."""
+    slug_dir = _MART_ROOT / slug
+    if not slug_dir.exists():
+        return _years_for(slug)
+    return sorted(int(d.name) for d in slug_dir.iterdir() if d.is_dir() and d.name.isdigit())
+
+
+YEARS_DET = sorted(set(_years_for("opencivitas_determinanti")) & set(_available_years("opencivitas_determinanti")))
+YEARS_FSC = sorted(set(_years_for("opencivitas_fsc_rso")) & set(_available_years("opencivitas_fsc_rso")))
 YEARS_BOTH = sorted(set(YEARS_DET) & set(YEARS_FSC))
 
 

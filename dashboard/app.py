@@ -32,7 +32,7 @@ pg = st.navigation(pages, position="sidebar")
 
 st.sidebar.markdown("---")
 st.sidebar.caption("Dati: OpenCivitas (ANCI/Sogei) · Determinanti + FSC")
-st.sidebar.caption("2015-2022 · ~6.500 comuni RSO")
+st.sidebar.caption("2015–2025 · ~6.500 comuni RSO")
 st.sidebar.caption("[DataCivicLab](https://dataciviclab.org/) · CC BY 4.0")
 
 pg.run()

@@ -5,12 +5,18 @@ Profilo dei comuni italiani: finanza (FSC) × servizi (indicatori)
 """
 
 import streamlit as st
+from lab_connectors.branding import apply_branding
 
 st.set_page_config(
     page_title="OpenCivitas Intelligence",
     page_icon="🏛️",
     layout="wide",
     initial_sidebar_state="expanded",
+)
+
+apply_branding(
+    repo_name="opencivitas",
+    repo_url="https://github.com/dataciviclab/opencivitas",
 )
 
 pages = {
@@ -29,10 +35,5 @@ pages = {
 }
 
 pg = st.navigation(pages, position="sidebar")
-
-st.sidebar.markdown("---")
-st.sidebar.caption("Dati: OpenCivitas (ANCI/Sogei) · Determinanti + FSC")
-st.sidebar.caption("2015–2025 · ~6.500 comuni RSO")
-st.sidebar.caption("[DataCivicLab](https://dataciviclab.org/) · CC BY 4.0")
 
 pg.run()

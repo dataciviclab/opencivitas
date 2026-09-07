@@ -40,9 +40,15 @@ def _years_for(slug: str) -> list[int]:
 def _available_years(slug: str) -> list[int]:
     """Anni effettivamente disponibili nei mart parquet (locale o GCS)."""
     slug_dir = _MART_ROOT / slug
-    if not slug_dir.exists():
-        return _years_for(slug)
-    return sorted(int(d.name) for d in slug_dir.iterdir() if d.is_dir() and d.name.isdigit())
+    if slug_dir.exists():
+        return sorted(int(d.name) for d in slug_dir.iterdir() if d.is_dir() and d.name.isdigit())
+    # Fallback: anni dal registry, esclusi quelli noti mancanti nella fonte
+    _KNOWN_GAPS = {
+        "opencivitas_determinanti": {2020},
+        "opencivitas_fsc_rso": {2019},
+    }
+    gaps = _KNOWN_GAPS.get(slug, set())
+    return [y for y in _years_for(slug) if y not in gaps]
 
 
 YEARS_DET = sorted(set(_years_for("opencivitas_determinanti")) & set(_available_years("opencivitas_determinanti")))

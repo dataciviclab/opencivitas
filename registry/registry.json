@@ -896,6 +896,27 @@
           "sogei_code": 4
         }
       },
+      "Indicatore": {
+        "entity": "Indicatore",
+        "label": "Indicatore",
+        "datasets": [
+          {
+            "slug": "opencivitas_glossario",
+            "name": "Opencivitas Glossario",
+            "column": "codice_indicatore",
+            "semantic_type": "indicatore_code"
+          },
+          {
+            "slug": "opencivitas_indicatori",
+            "name": "Opencivitas Indicatori",
+            "column": "indicatore",
+            "semantic_type": "indicatore_code"
+          }
+        ],
+        "types": {
+          "indicatore_code": 2
+        }
+      },
       "Provincia": {
         "entity": "Provincia",
         "label": "Provincia",
@@ -1062,6 +1083,19 @@
       },
       {
         "from": {
+          "entity": "Indicatore",
+          "dataset": "opencivitas_glossario",
+          "via": "indicatore_code"
+        },
+        "to": {
+          "entity": "Progetto",
+          "bridge": "pnrr_indicatori_target",
+          "on": "cup",
+          "semantic_type": "cup_code"
+        }
+      },
+      {
+        "from": {
           "entity": "Ente",
           "dataset": "opencivitas_indicatori",
           "via": "sogei_code"
@@ -1071,6 +1105,19 @@
           "bridge": "opencivitas_fsc_enti_rso",
           "on": "username",
           "semantic_type": "municipality_name"
+        }
+      },
+      {
+        "from": {
+          "entity": "Indicatore",
+          "dataset": "opencivitas_indicatori",
+          "via": "indicatore_code"
+        },
+        "to": {
+          "entity": "Progetto",
+          "bridge": "pnrr_indicatori_target",
+          "on": "cup",
+          "semantic_type": "cup_code"
         }
       }
     ]

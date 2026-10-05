@@ -2,7 +2,7 @@
   "schema_version": 1,
   "repo": "opencivitas",
   "source_repo": "dataciviclab/opencivitas",
-  "updated_at": "2026-09-07",
+  "updated_at": "2026-10-05",
   "datasets": [
     {
       "slug": "opencivitas_determinanti",
@@ -440,7 +440,8 @@
           "name": "codice_indicatore",
           "type": "VARCHAR",
           "role": "dimension",
-          "description": ""
+          "description": "",
+          "semantic_type": "indicatore_code"
         },
         {
           "name": "descrizione",
@@ -537,7 +538,8 @@
           "name": "indicatore",
           "type": "VARCHAR",
           "role": "dimension",
-          "description": ""
+          "description": "",
+          "semantic_type": "indicatore_code"
         },
         {
           "name": "valore_num",
@@ -692,7 +694,7 @@
       "detail": "anni 2015-2022 — mart: si",
       "action": "",
       "run": {
-        "run_id": "20260907T141309Z_dc7e0a7c",
+        "run_id": "20261005T135445Z_56ae31b9",
         "year": 2022,
         "status": "SUCCESS",
         "quality_score": {
@@ -710,9 +712,9 @@
           "clean": 925400,
           "mart": 947350
         },
-        "started_at": "2026-09-07T14:13:09.284539+00:00",
-        "finished_at": "2026-09-07T14:13:13.723743+00:00",
-        "duration_seconds": 4.439
+        "started_at": "2026-10-05T13:54:45.931820+00:00",
+        "finished_at": "2026-10-05T13:54:50.490181+00:00",
+        "duration_seconds": 4.558
       }
     },
     {
@@ -723,7 +725,7 @@
       "detail": "anni 2017-2025 — mart: si",
       "action": "",
       "run": {
-        "run_id": "20260907T141334Z_24e7a139",
+        "run_id": "20261005T135515Z_ed58811a",
         "year": 2025,
         "status": "SUCCESS",
         "quality_score": {
@@ -741,9 +743,9 @@
           "clean": 255133,
           "mart": 404824
         },
-        "started_at": "2026-09-07T14:13:34.259211+00:00",
-        "finished_at": "2026-09-07T14:13:37.195174+00:00",
-        "duration_seconds": 2.936
+        "started_at": "2026-10-05T13:55:15.643683+00:00",
+        "finished_at": "2026-10-05T13:55:19.093486+00:00",
+        "duration_seconds": 3.45
       }
     },
     {
@@ -754,7 +756,7 @@
       "detail": "anni 2015-2022 — mart: si",
       "action": "",
       "run": {
-        "run_id": "20260907T141725Z_63f68ed2",
+        "run_id": "20261005T135858Z_cfde3cd7",
         "year": 2022,
         "status": "SUCCESS",
         "quality_score": {
@@ -769,12 +771,12 @@
         },
         "output_bytes": {
           "raw": 181352725,
-          "clean": 12217291,
+          "clean": 12217587,
           "mart": 713660
         },
-        "started_at": "2026-09-07T14:17:25.098014+00:00",
-        "finished_at": "2026-09-07T14:18:01.185050+00:00",
-        "duration_seconds": 36.087
+        "started_at": "2026-10-05T13:58:58.710715+00:00",
+        "finished_at": "2026-10-05T13:59:35.145946+00:00",
+        "duration_seconds": 36.435
       }
     },
     {
@@ -785,7 +787,7 @@
       "detail": "anno 2025 — mart: si",
       "action": "",
       "run": {
-        "run_id": "20260907T141153Z_18be125c",
+        "run_id": "20261005T135224Z_f4c56b3f",
         "year": 2025,
         "status": "SUCCESS",
         "quality_score": {
@@ -802,9 +804,9 @@
           "clean": 85837,
           "mart": 87422
         },
-        "started_at": "2026-09-07T14:11:53.625166+00:00",
-        "finished_at": "2026-09-07T14:11:56.131119+00:00",
-        "duration_seconds": 2.506
+        "started_at": "2026-10-05T13:52:24.737840+00:00",
+        "finished_at": "2026-10-05T13:52:27.382295+00:00",
+        "duration_seconds": 2.644
       }
     },
     {
@@ -815,7 +817,7 @@
       "detail": "anni 2015-2022 — mart: si",
       "action": "",
       "run": {
-        "run_id": "20260907T141235Z_0d1337ee",
+        "run_id": "20261005T135403Z_6d82c4b0",
         "year": 2022,
         "status": "SUCCESS",
         "quality_score": {
@@ -833,9 +835,9 @@
           "clean": 11338,
           "mart": 11338
         },
-        "started_at": "2026-09-07T14:12:35.155325+00:00",
-        "finished_at": "2026-09-07T14:12:41.054301+00:00",
-        "duration_seconds": 5.899
+        "started_at": "2026-10-05T13:54:03.035546+00:00",
+        "finished_at": "2026-10-05T13:54:17.900554+00:00",
+        "duration_seconds": 14.865
       }
     }
   ],

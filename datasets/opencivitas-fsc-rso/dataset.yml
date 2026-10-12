@@ -6,24 +6,46 @@ dataset:
   source_id: "opencivitas"
   tags: [finanza-pubblica, opencivitas, fsc]
   category: finanza-pubblica
-  years: [2017, 2018, 2020, 2021, 2022, 2023, 2024, 2025]
+  years: [2017, 2018, 2020, 2021, 2022, 2023, 2024, 2025, 2026]
   time_coverage:
     start_year: 2017
-    end_year: 2025
+    end_year: 2026
 
 support:
   - name: "opencivitas_fsc_enti_rso"
     config: "../../support/opencivitas-fsc-enti-rso/dataset.yml"
     years: [2025]
 
+# Fonte unica: portale Liferay OpenCivitas (CSV diretti, URL con UUID).
+# url_suffix_by_year: suffisso per anno dopo il path base — il toolkit lo
+# appende alla url formattata (testato, stesso pattern di aifa/bdap).
+# - 2017-2021: serie originale "{year}_VAR_FSC_1" (identica ai vecchi ZIP docs,
+#   verificato per righe: 177687). La serie revisionata "{year}_VAR_FSC_1_2022"
+#   ha il set componenti 2022 (164525 righe) — non usata.
+# - 2022-2025: "{year}_VAR_FSC_1_{year}"
+# - 2026+: "{year}_VAR_FSC_1_{year}_IT.csv"
+# - 2019 mai pubblicato dalla fonte (gap confermato su docs e portale)
+# Gli UUID possono cambiare se Sogei ricarica un file: se il run va in 404,
+# recuperare il nuovo URL dall'inventario del catalog-watch (registry/catalog.json
+# / out/so/inventory.parquet).
 raw:
   output_policy: overwrite
   sources:
-    - type: script
+    - name: fsc
+      type: http_file
       args:
-        command: "python preprocess.py {year} raw_input.csv"
-        output: "raw_input.csv"
-        filename: "raw_input.csv"
+        url: "https://www.opencivitas.it/portale/documents/20118/0/"
+        url_suffix_by_year:
+          2017: "2017_VAR_FSC_1/4eda0b44-28e2-d9b4-bcac-1d1639ea51cf"
+          2018: "2018_VAR_FSC_1/5be2ee1d-1140-8650-1875-d2469bee542a"
+          2020: "2020_VAR_FSC_1/ae9027f5-fefd-1543-08f3-3e961ee6f754"
+          2021: "2021_VAR_FSC_1/fe43470d-f198-9d8a-94cc-46d3fdb7fc06"
+          2022: "2022_VAR_FSC_1_2022/3d0da971-d1e7-57f4-87be-bffa6bbeeecd"
+          2023: "2023_VAR_FSC_1_2023/ff5a615f-562f-499b-d47e-f2d0c55bf2be"
+          2024: "2024_VAR_FSC_1_2024/282c2818-81ba-d798-2c76-4daa6be90942"
+          2025: "2025_VAR_FSC_1_2025/2fb598e5-2ccd-424a-2fda-debc20b26d1b"
+          2026: "2026_VAR_FSC_1_2026_IT.csv/63988461-9ae1-ce7d-13f0-fab3c9c7b77a"
+        filename: "fsc_{year}.csv"
       primary: true
 
 clean:

@@ -315,7 +315,7 @@
       "source_id": "opencivitas",
       "period": {
         "start": 2017,
-        "end": 2025
+        "end": 2026
       },
       "tags": [
         "finanza-pubblica",
@@ -650,7 +650,7 @@
       "table": "mart_compose_comuni",
       "location": {
         "type": "gcs",
-        "path": "gs://dataciviclab-mart/opencivitas/opencivitas_fsc_rso/2025/mart_compose_comuni.parquet",
+        "path": "gs://dataciviclab-mart/opencivitas/opencivitas_fsc_rso/2026/mart_compose_comuni.parquet",
         "multi_file": false
       }
     },

@@ -17,6 +17,8 @@ support:
     years: [2025]
 
 # Fonte unica: portale Liferay OpenCivitas (CSV diretti, URL con UUID).
+# url_suffix_by_year: suffisso per anno dopo il path base — il toolkit lo
+# appende alla url formattata (testato, stesso pattern di aifa/bdap).
 # - 2017-2021: serie originale "{year}_VAR_FSC_1" (identica ai vecchi ZIP docs,
 #   verificato per righe: 177687). La serie revisionata "{year}_VAR_FSC_1_2022"
 #   ha il set componenti 2022 (164525 righe) — non usata.
@@ -29,68 +31,21 @@ support:
 raw:
   output_policy: overwrite
   sources:
-    - name: fsc_2017
+    - name: fsc
       type: http_file
-      year: 2017
       args:
-        url: "https://www.opencivitas.it/portale/documents/20118/0/2017_VAR_FSC_1/4eda0b44-28e2-d9b4-bcac-1d1639ea51cf"
-        filename: "fsc_2017.csv"
-      primary: true
-    - name: fsc_2018
-      type: http_file
-      year: 2018
-      args:
-        url: "https://www.opencivitas.it/portale/documents/20118/0/2018_VAR_FSC_1/5be2ee1d-1140-8650-1875-d2469bee542a"
-        filename: "fsc_2018.csv"
-      primary: true
-    - name: fsc_2020
-      type: http_file
-      year: 2020
-      args:
-        url: "https://www.opencivitas.it/portale/documents/20118/0/2020_VAR_FSC_1/ae9027f5-fefd-1543-08f3-3e961ee6f754"
-        filename: "fsc_2020.csv"
-      primary: true
-    - name: fsc_2021
-      type: http_file
-      year: 2021
-      args:
-        url: "https://www.opencivitas.it/portale/documents/20118/0/2021_VAR_FSC_1/fe43470d-f198-9d8a-94cc-46d3fdb7fc06"
-        filename: "fsc_2021.csv"
-      primary: true
-    - name: fsc_2022
-      type: http_file
-      year: 2022
-      args:
-        url: "https://www.opencivitas.it/portale/documents/20118/0/2022_VAR_FSC_1_2022/3d0da971-d1e7-57f4-87be-bffa6bbeeecd"
-        filename: "fsc_2022.csv"
-      primary: true
-    - name: fsc_2023
-      type: http_file
-      year: 2023
-      args:
-        url: "https://www.opencivitas.it/portale/documents/20118/0/2023_VAR_FSC_1_2023/ff5a615f-562f-499b-d47e-f2d0c55bf2be"
-        filename: "fsc_2023.csv"
-      primary: true
-    - name: fsc_2024
-      type: http_file
-      year: 2024
-      args:
-        url: "https://www.opencivitas.it/portale/documents/20118/0/2024_VAR_FSC_1_2024/282c2818-81ba-d798-2c76-4daa6be90942"
-        filename: "fsc_2024.csv"
-      primary: true
-    - name: fsc_2025
-      type: http_file
-      year: 2025
-      args:
-        url: "https://www.opencivitas.it/portale/documents/20118/0/2025_VAR_FSC_1_2025/2fb598e5-2ccd-424a-2fda-debc20b26d1b"
-        filename: "fsc_2025.csv"
-      primary: true
-    - name: fsc_2026
-      type: http_file
-      year: 2026
-      args:
-        url: "https://www.opencivitas.it/portale/documents/20118/0/2026_VAR_FSC_1_2026_IT.csv/63988461-9ae1-ce7d-13f0-fab3c9c7b77a"
-        filename: "fsc_2026.csv"
+        url: "https://www.opencivitas.it/portale/documents/20118/0/"
+        url_suffix_by_year:
+          2017: "2017_VAR_FSC_1/4eda0b44-28e2-d9b4-bcac-1d1639ea51cf"
+          2018: "2018_VAR_FSC_1/5be2ee1d-1140-8650-1875-d2469bee542a"
+          2020: "2020_VAR_FSC_1/ae9027f5-fefd-1543-08f3-3e961ee6f754"
+          2021: "2021_VAR_FSC_1/fe43470d-f198-9d8a-94cc-46d3fdb7fc06"
+          2022: "2022_VAR_FSC_1_2022/3d0da971-d1e7-57f4-87be-bffa6bbeeecd"
+          2023: "2023_VAR_FSC_1_2023/ff5a615f-562f-499b-d47e-f2d0c55bf2be"
+          2024: "2024_VAR_FSC_1_2024/282c2818-81ba-d798-2c76-4daa6be90942"
+          2025: "2025_VAR_FSC_1_2025/2fb598e5-2ccd-424a-2fda-debc20b26d1b"
+          2026: "2026_VAR_FSC_1_2026_IT.csv/63988461-9ae1-ce7d-13f0-fab3c9c7b77a"
+        filename: "fsc_{year}.csv"
       primary: true
 
 clean:

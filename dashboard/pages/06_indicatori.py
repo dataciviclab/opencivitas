@@ -6,7 +6,7 @@ import plotly.graph_objects as go
 import pandas as pd
 import duckdb
 
-from sources import load_indicatori_comuni, YEARS_DET, load_joined
+from sources import load_indicatori_comuni, YEARS_IND, load_joined
 
 st.title("📊 Indicatori")
 st.markdown("Esplorazione delle metriche di performance per servizio.")
@@ -50,7 +50,9 @@ for cat, metrics in METRICHE.items():
 # ── Filtri ──────────────────────────────────────────────────────────────
 col_f1, col_f2 = st.columns(2)
 with col_f1:
-    year = st.selectbox("Anno", YEARS_DET, index=YEARS_DET.index(2022) if 2022 in YEARS_DET else 0, key="indi_anno")
+    year = st.selectbox(
+        "Anno", YEARS_IND, index=YEARS_IND.index(2023) if 2023 in YEARS_IND else 0, key="indi_anno"
+    )
 with col_f2:
     metrica_label = st.selectbox("Metrica", list(all_metrics.keys()), key="indi_metrica")
 
@@ -63,7 +65,11 @@ if df.empty:
     st.stop()
 
 # Filtra aggregate
-df = df[df["comune"].notna() & (df["comune"] != "") & ~df["comune"].str.contains("REGIONE|PROVINCIA", case=False, na=False)]
+df = df[
+    df["comune"].notna()
+    & (df["comune"] != "")
+    & ~df["comune"].str.contains("REGIONE|PROVINCIA", case=False, na=False)
+]
 df_valid = df[df[col_id].notna()].copy()
 
 if df_valid.empty:
@@ -85,7 +91,12 @@ cg1, cg2 = st.columns(2)
 with cg1:
     st.subheader("Distribuzione")
     fig = px.histogram(df_valid, x=col_id, nbins=50, color_discrete_sequence=["#3498db"])
-    fig.update_layout(height=350, margin=dict(l=0, r=0, t=10, b=0), xaxis_title=metrica_label, yaxis_title="Comuni")
+    fig.update_layout(
+        height=350,
+        margin=dict(l=0, r=0, t=10, b=0),
+        xaxis_title=metrica_label,
+        yaxis_title="Comuni",
+    )
     st.plotly_chart(fig, use_container_width=True)
 
 with cg2:
@@ -93,9 +104,18 @@ with cg2:
     agg_reg = df_valid.groupby("regione")[col_id].agg(["mean", "median", "count"]).reset_index()
     agg_reg.columns = ["regione", "media", "mediana", "n"]
     agg_reg = agg_reg.sort_values("media", ascending=True)
-    fig2 = px.bar(agg_reg, x="media", y="regione", orientation="h", color="media",
-                  color_continuous_scale="Blues", text="media")
-    fig2.update_layout(height=500, margin=dict(l=0, r=0, t=10, b=0), xaxis_title=metrica_label, showlegend=False)
+    fig2 = px.bar(
+        agg_reg,
+        x="media",
+        y="regione",
+        orientation="h",
+        color="media",
+        color_continuous_scale="Blues",
+        text="media",
+    )
+    fig2.update_layout(
+        height=500, margin=dict(l=0, r=0, t=10, b=0), xaxis_title=metrica_label, showlegend=False
+    )
     fig2.update_traces(texttemplate="%.1f", textposition="outside")
     st.plotly_chart(fig2, use_container_width=True)
 
@@ -125,7 +145,9 @@ media_naz = df_valid[col_id].mean()
 df_valid["delta"] = df_valid[col_id] - media_naz
 
 fig3 = px.scatter(
-    df_valid, x="comune", y="delta",
+    df_valid,
+    x="comune",
+    y="delta",
     color="regione",
     hover_data=["comune", "regione", col_id],
     labels={"delta": f"{metrica_label} vs media", "comune": ""},

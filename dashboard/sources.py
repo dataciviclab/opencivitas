@@ -53,6 +53,8 @@ def _available_years(slug: str) -> list[int]:
 
 YEARS_DET = sorted(set(_years_for("opencivitas_determinanti")) & set(_available_years("opencivitas_determinanti")))
 YEARS_FSC = sorted(set(_years_for("opencivitas_fsc_rso")) & set(_available_years("opencivitas_fsc_rso")))
+YEARS_IND = sorted(set(_years_for("opencivitas_indicatori")) & set(_available_years("opencivitas_indicatori")))
+YEARS_FPRCM = sorted(set(_years_for("opencivitas_fprcm")) & set(_available_years("opencivitas_fprcm")))
 YEARS_BOTH = sorted(set(YEARS_DET) & set(YEARS_FSC))
 
 
@@ -102,6 +104,16 @@ def load_joined_all() -> pd.DataFrame:
 @st.cache_data(ttl=3600, show_spinner=False)
 def load_indicatori_comuni(year: int) -> pd.DataFrame:
     return load_mart_table("opencivitas_indicatori", "mart_comuni", year, prefix=PREFIX)
+
+
+@st.cache_data(ttl=3600, show_spinner=False)
+def load_fprcm(year: int) -> pd.DataFrame:
+    return load_mart_table("opencivitas_fprcm", "mart_compose_province", year, prefix=PREFIX)
+
+
+@st.cache_data(ttl=3600, show_spinner=False)
+def load_fprcm_all() -> pd.DataFrame:
+    return load_mart_all_years("opencivitas_fprcm", "mart_compose_province", YEARS_FPRCM, prefix=PREFIX)
 
 
 @st.cache_data(ttl=3600, show_spinner=False)

@@ -1,4 +1,4 @@
-"""Trend — Evoluzione quadrant e metriche nel tempo."""
+"""Trend — Evoluzione quadrant e metriche nel tempo (determinanti)."""
 
 import streamlit as st
 import plotly.graph_objects as go
@@ -9,6 +9,10 @@ from sources import load_determinanti_all, YEARS_DET
 
 st.title("📈 Trend")
 st.markdown("Evoluzione delle performance dei comuni italiani nel tempo.")
+st.caption(
+    f"Anni: {YEARS_DET[0]}–{YEARS_DET[-1]} (salto 2020) — "
+    "le determinanti si fermano al 2022; per i fondi FSC fino al 2026 vedi la pagina FSC"
+)
 
 df = load_determinanti_all()
 if df.empty:
@@ -65,4 +69,4 @@ fig3.add_trace(go.Scatter(x=agg2["anno"], y=agg2["sv"], name="Servizi", line=dic
 fig3.update_layout(height=250, yaxis_title="0-10", yaxis_range=[0, 10])
 st.plotly_chart(fig3, use_container_width=True)
 
-st.caption(f"Fonte: OpenCivitas (ANCI/Sogei) · CC BY 4.0")
+st.caption("Fonte: OpenCivitas (ANCI/Sogei) · CC BY 4.0")

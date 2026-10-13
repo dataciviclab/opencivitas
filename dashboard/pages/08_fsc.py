@@ -62,7 +62,7 @@ table = df_sorted[show_cols].reset_index(drop=True)
 for c in table.select_dtypes("float").columns:
     table[c] = table[c].round(2)
 
-st.dataframe(table, use_container_width=True, height=min(len(table) * 35 + 40, 700))
+st.dataframe(table, width="stretch", height=min(len(table) * 35 + 40, 700))
 
 st.markdown("---")
 
@@ -84,14 +84,14 @@ if not fsc_all.empty:
     fig.add_trace(go.Scatter(x=agg["anno"], y=agg["dotazione"], name="Dotazione finale", line=dict(color="#2ecc71")))
     fig.add_trace(go.Scatter(x=agg["anno"], y=agg["capacita"], name="Capacità fiscale", line=dict(color="#f39c12")))
     fig.update_layout(height=400, yaxis_title="€/abitante", legend=dict(x=0, y=1.1, orientation="h"))
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
 
     st.dataframe(agg.rename(columns={
         "anno": "Anno", "n": "N comuni",
         "fondi": "Fondo perequativo €/ab",
         "dotazione": "Dotazione finale €/ab",
         "capacita": "Capacità fiscale €/ab",
-    }).round(2), hide_index=True, use_container_width=True)
+    }).round(2), hide_index=True, width="stretch")
 
 st.caption(
     f"Anni: {YEARS_FSC[0]}–{YEARS_FSC[-1]} (salto 2019, mai pubblicato) · "

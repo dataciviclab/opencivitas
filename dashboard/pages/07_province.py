@@ -68,7 +68,7 @@ table = df_sorted[show_cols].reset_index(drop=True)
 for c in table.select_dtypes("float").columns:
     table[c] = table[c].round(2)
 
-st.dataframe(table, use_container_width=True, height=min(len(table) * 35 + 40, 700))
+st.dataframe(table, width="stretch", height=min(len(table) * 35 + 40, 700))
 
 st.caption(
     f"Anno: {year} · 86 enti RSO (province, città metropolitane, province montane) · "

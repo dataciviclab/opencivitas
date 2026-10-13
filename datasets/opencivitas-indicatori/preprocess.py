@@ -29,6 +29,7 @@ YEAR_MAP = {
     2019: {"prefix": "60", "suffix_default": "1", "tot_suffix": "2"},
     2021: {"prefix": "70", "suffix_default": "1", "tot_suffix": "1"},
     2022: {"prefix": "80", "suffix_default": "1", "tot_suffix": "2"},
+    2023: {"portal": True},
 }
 
 # Ambiti: sigla_nell_URL → nome_descrittivo
@@ -43,6 +44,21 @@ AMBITI = [
 ]
 
 BASE_URL = "https://docs.opencivitas.it"
+
+# 2023: naming nuovo sul portale Liferay — CSV diretti (no ZIP), niente
+# prefisso FC, sigle estese (TERR_VIAB con underscore), suffisso _01_IT.
+# UUID: se Sogei ricarica un file, recuperare il nuovo URL dall'inventario
+# catalog-watch.
+PORTAL_BASE = "https://www.opencivitas.it/portale/documents/20118/0/"
+PORTAL_2023 = {
+    "AMMIN": "2023_Ind_AMMINISTR_01_IT.csv/45e7ec1b-d282-278d-de7b-73af1b374255",
+    "ISTRUZ": "2023_Ind_ISTRUZ_01_IT.csv/c9b4ea9e-d2c1-9ae4-3587-ceea43985da3",
+    "POLIZIA": "2023_Ind_POLIZIA_01_IT.csv/175d849b-35f1-c439-c869-fe48959a24ce",
+    "RIFIUTI": "2023_Ind_RIFIUTI_01_IT.csv/34fd224a-5cac-7676-3016-7c55fe5d6450",
+    "SOCNID": "2023_Ind_SOCNID_01_IT/cfedc2c9-b05d-07cb-da97-decaf9190f5f",
+    "TERRVIAB": "2023_Ind_TERR_VIAB_01_IT/5565663a-6434-27e1-1b7a-273e87b02635",
+    "TOT": "2023_Ind_TOT_01_IT.csv/1086db31-bf42-8678-0520-c77eacce2a23",
+}
 
 
 def download_and_extract_csv(url, tmp_dir):
@@ -84,28 +100,41 @@ def main():
         )
         sys.exit(1)
 
-    prefix = YEAR_MAP[year]["prefix"]
+    is_portal = YEAR_MAP[year].get("portal", False)
+    prefix = YEAR_MAP[year].get("prefix")
 
     with tempfile.TemporaryDirectory() as tmp_dir:
         all_rows = []
         downloaded = 0
 
         for sigla, ambito_nome in AMBITI:
-            # Determina suffisso
-            if sigla == "TOT":
-                suffix = YEAR_MAP[year]["tot_suffix"]
+            if is_portal:
+                # 2023: CSV diretto dal portale (no ZIP)
+                url = f"{PORTAL_BASE}{PORTAL_2023[sigla]}"
+                csv_path = os.path.join(tmp_dir, f"{sigla}.csv")
+                try:
+                    data = download(url, timeout=60)
+                except RuntimeError:
+                    print(f"  SKIP {sigla} ({ambito_nome}) — non disponibile", flush=True)
+                    continue
+                with open(csv_path, "wb") as f:
+                    f.write(data)
             else:
-                suffix = YEAR_MAP[year]["suffix_default"]
+                # Determina suffisso
+                if sigla == "TOT":
+                    suffix = YEAR_MAP[year]["tot_suffix"]
+                else:
+                    suffix = YEAR_MAP[year]["suffix_default"]
 
-            if YEAR_MAP[year].get("no_year"):
-                url = f"{BASE_URL}/Ind_FC{prefix}{sigla}_{suffix}_csv.zip"
-            else:
-                url = f"{BASE_URL}/{year}_Ind_FC{prefix}{sigla}_{suffix}_csv.zip"
+                if YEAR_MAP[year].get("no_year"):
+                    url = f"{BASE_URL}/Ind_FC{prefix}{sigla}_{suffix}_csv.zip"
+                else:
+                    url = f"{BASE_URL}/{year}_Ind_FC{prefix}{sigla}_{suffix}_csv.zip"
 
-            csv_path = download_and_extract_csv(url, tmp_dir)
-            if csv_path is None:
-                print(f"  SKIP {sigla} ({ambito_nome}) — non disponibile", flush=True)
-                continue
+                csv_path = download_and_extract_csv(url, tmp_dir)
+                if csv_path is None:
+                    print(f"  SKIP {sigla} ({ambito_nome}) — non disponibile", flush=True)
+                    continue
 
             # Leggi il CSV (prova UTF-8, fallback Latin-1)
             def read_csv(path):

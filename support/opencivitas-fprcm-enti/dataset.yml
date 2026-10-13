@@ -1,0 +1,63 @@
+root: "../../out"
+schema_version: 1
+
+dataset:
+  name: "opencivitas_fprcm_enti"
+  source_id: "opencivitas"
+  tags: [finanza-pubblica, opencivitas, fprcm, enti, province]
+  category: finanza-pubblica
+  years: [2026]
+  time_coverage:
+    start_year: 2026
+    end_year: 2026
+
+raw:
+  output_policy: overwrite
+  sources:
+    - name: "opencivitas_fprcm_enti_2026_xlsx"
+      type: "http_file"
+      args:
+        url: "https://www.opencivitas.it/portale/documents/20118/0/Metadati_Enti_FPRCM_2026.xlsx/fd0e57c0-72ea-c7fc-dd01-08a160bf060f"
+        filename: "Metadati_Enti_FPRCM_2026.xlsx"
+      primary: true
+
+clean:
+  sql: "sql/clean.sql"
+  read:
+    source: auto
+    mode: latest
+    header: true
+    sheet_name: "anagrafica_enti_FPRCM2026"
+    trim_whitespace: true
+  required_columns:
+    - username
+    - denominazione
+    - tipologia_ente
+    - provincia
+    - regione
+    - provincia_istat_cod
+    - regione_istat_cod
+  validate:
+    min_rows: 80
+    primary_key: username
+    not_null:
+      - "username"
+      - "denominazione"
+
+mart:
+  tables:
+    - name: "mart_enti"
+      sql: "sql/mart.sql"
+  required_tables:
+    - "mart_enti"
+  validate:
+    table_rules:
+      mart_enti:
+        min_rows: 80
+        primary_key: username
+
+validation:
+  fail_on_error: true
+
+output:
+  artifacts: "standard"

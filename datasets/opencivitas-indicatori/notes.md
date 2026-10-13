@@ -10,8 +10,11 @@ Catalogo completo via sitemap XML: 271 dataset totali.
 
 - **2009-2013**: formato wide (spesa storica, fabbisogni), chiave = COMUNE_CAT_COD
 - **2015-2022**: formato EAV (indicatori e determinanti), chiave = USERNAME
+- **2023**: naming nuovo sul portale Liferay (CSV diretti, no ZIP, no prefisso FC,
+  sigle estese `AMMINISTR`/`TERR_VIAB`, suffisso `_01_IT`) — gestito nel preprocess
+  via `PORTAL_2023`; schema CSV identico agli anni precedenti
 
-Questo candidate copre la **seconda era**: 7 ambiti × 7 anni (2015-2022, salto 2020) in formato EAV.
+Questo candidate copre la **seconda era**: 7 ambiti × 8 anni (2015-2023, salto 2020) in formato EAV.
 
 ## Pipeline
 

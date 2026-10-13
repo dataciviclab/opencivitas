@@ -1,0 +1,113 @@
+root: "../../out"
+schema_version: 1
+
+dataset:
+  name: "opencivitas_fprcm"
+  source_id: "opencivitas"
+  tags: [finanza-pubblica, opencivitas, fprcm, province]
+  category: finanza-pubblica
+  years: [2022, 2023, 2024, 2025, 2026]
+  time_coverage:
+    start_year: 2022
+    end_year: 2026
+
+support:
+  - name: "opencivitas_fprcm_enti"
+    config: "../../support/opencivitas-fprcm-enti/dataset.yml"
+    years: [2026]
+
+# Fonte unica: portale Liferay OpenCivitas (CSV diretti, URL con UUID).
+# url_suffix_by_year: suffisso per anno dopo il path base — stesso pattern
+# di opencivitas-fsc-rso.
+# - 2022: modulo 2 (rilascio correttivo 2023: POPOLAZIONE_2020 → POPOLAZIONE,
+#   valori identici al modulo 1) — usato per coerenza con gli anni successivi
+# - 2023-2025: "{year}_FPRCM_1_{year}" / "{year}_FPRCM_01_{year}_IT.csv"
+# - 2026: "{year}_FPRCM_01_{year}_IT.csv"
+# Gli UUID possono cambiare se Sogei ricarica un file: se il run va in 404,
+# recuperare il nuovo URL dall'inventario del catalog-watch.
+raw:
+  output_policy: overwrite
+  sources:
+    - name: fprcm
+      type: http_file
+      args:
+        url: "https://www.opencivitas.it/portale/documents/20118/0/"
+        url_suffix_by_year:
+          2022: "2022_FPRCM_2_2023/6105f185-b5aa-71fa-a28c-aef3ed41b41a"
+          2023: "2023_FPRCM_1_2023/44fa97e4-0d8d-c484-9720-3adfeab7de49"
+          2024: "2024_FPRCM_01_2024_IT.csv/848d67d3-9cb5-96e5-9398-6672d29e250b"
+          2025: "2025_FPRCM_1_2025/4dc3471a-be33-650c-6a97-e844bb1b2b9b"
+          2026: "2026_FPRCM_01_2026_IT.csv/02f9598f-6fb4-68cd-3346-80210af7ea56"
+        filename: "fprcm_{year}.csv"
+      primary: true
+
+clean:
+  sql: "sql/clean.sql"
+  read:
+    source: config_only
+    mode: latest
+    header: false
+    delim: ";"
+    encoding: "utf-8"
+    columns:
+      column00: "VARCHAR"
+      column01: "VARCHAR"
+      column02: "VARCHAR"
+    trim_whitespace: true
+  required_columns:
+    - anno
+    - username
+    - ente
+    - tipologia_ente
+    - popolazione
+    - capacita_fiscale
+    - fabbisogni_standard
+    - contributo_fondamentali_prov
+    - totale_contributi_fondi_correnti
+    - join_enti_ok
+  validate:
+    min_rows: 80
+    primary_key:
+      - username
+      - anno
+    promotion:
+      max_row_drop_pct: 100
+    not_null:
+      - "username"
+      - "ente"
+      - "popolazione"
+      - "join_enti_ok"
+
+mart:
+  tables:
+    - name: "mart_compose_province"
+      sql: "sql/mart_compose.sql"
+  required_tables:
+    - "mart_compose_province"
+  validate:
+    table_rules:
+      mart_compose_province:
+        min_rows: 80
+        primary_key:
+          - username
+          - anno
+        required_columns:
+          - "username"
+          - "ente"
+          - "popolazione"
+          - "capacita_fiscale"
+          - "fabbisogni_standard"
+          - "join_enti_ok"
+          - "capacita_fiscale_procapite"
+          - "fabbisogni_standard_procapite"
+        not_null:
+          - "username"
+          - "ente"
+          - "popolazione"
+          - "join_enti_ok"
+
+validation:
+  fail_on_error: true
+
+output:
+  artifacts: "standard"

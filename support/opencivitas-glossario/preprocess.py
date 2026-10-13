@@ -29,6 +29,7 @@ YEAR_MAP = {
     2019: {"prefix": "60"},
     2021: {"prefix": "70"},
     2022: {"prefix": "80"},
+    2023: {"portal": True},
 }
 
 # Ambiti
@@ -42,27 +43,53 @@ AMBITI = [
     ("TOT", "servizi_totali"),
 ]
 
+# 2023: XLSX diretti dal portale Liferay (no ZIP). Naming nuovo: sigle estese
+# (AMMINISTR, TERR_VIAB con underscore), suffisso _01_IT. UUID: se Sogei
+# ricarica un file, recuperare il nuovo URL dall'inventario catalog-watch.
+PORTAL_BASE = "https://www.opencivitas.it/portale/documents/20118/0/"
+PORTAL_2023 = {
+    "AMMIN": "2023_Metadati_Ind_FC90_AMMINISTR_01_IT.xlsx/9e1fd560-98c5-bad0-2d77-55c8018d8a02",
+    "ISTRUZ": "2023_Metadati_Ind_FC90_ISTRUZ_01_IT.xlsx/91050c02-0253-d9fb-781f-6bbca917b68a",
+    "POLIZIA": "2023_Metadati_Ind_FC90_POLIZIA_01_IT.xlsx/1fe7b6fb-b7b8-5de6-ef80-cc9eae7b9729",
+    "RIFIUTI": "2023_Metadati_Ind_FC90_RIFIUTI_01_IT.xlsx/85afd52b-b9a4-7d5b-465f-9b37a34b79b9",
+    "SOCNID": "2023_Metadati_Ind_FC90_SOCNID_01_IT.xlsx/912e9d92-ba06-c82b-e8b5-dee94af57117",
+    "TERRVIAB": "2023_Metadati_Ind_FC90_TERR_VIAB_01_IT.xlsx/6feeacb0-d373-0940-f293-91b02bb1963c",
+    "TOT": "2023_Metadati_Ind_FC90_TOT_01_IT.xlsx/979ac980-1a35-ca7c-9005-1045b5aebe1e",
+}
 
-def download_and_read_metadata(url, tmp_dir, ambito_nome, year):
-    """Scarica ZIP metadati, estrae XLSX, legge foglio Indicatori."""
-    zip_path = os.path.join(tmp_dir, "meta.zip")
+
+def download_and_read_metadata(url, tmp_dir, ambito_nome, year, direct_xlsx=False):
+    """Scarica metadati (ZIP→XLSX o XLSX diretto) e legge i fogli.
+
+    direct_xlsx=True (2023): la URL punta a un XLSX diretto del portale,
+    niente estrazione ZIP.
+    """
+    xlsx_path = os.path.join(tmp_dir, "meta.xlsx")
 
     try:
         data = download(url, timeout=30)
     except RuntimeError:
         return []
 
-    try:
-        with open(zip_path, "wb") as f:
-            f.write(data)
-        with zipfile.ZipFile(zip_path) as zf:
-            xlsx_files = [f for f in zf.namelist() if f.endswith(".xlsx")]
-            if not xlsx_files:
-                return []
-            zf.extract(xlsx_files[0], tmp_dir)
-            xlsx_path = os.path.join(tmp_dir, xlsx_files[0])
-    except Exception:
-        return []
+    if direct_xlsx:
+        try:
+            with open(xlsx_path, "wb") as f:
+                f.write(data)
+        except Exception:
+            return []
+    else:
+        zip_path = os.path.join(tmp_dir, "meta.zip")
+        try:
+            with open(zip_path, "wb") as f:
+                f.write(data)
+            with zipfile.ZipFile(zip_path) as zf:
+                xlsx_files = [f for f in zf.namelist() if f.endswith(".xlsx")]
+                if not xlsx_files:
+                    return []
+                zf.extract(xlsx_files[0], tmp_dir)
+                xlsx_path = os.path.join(tmp_dir, xlsx_files[0])
+        except Exception:
+            return []
 
     # Leggi fogli Indicatori, Determinanti, Codici con pandas
     try:
@@ -70,6 +97,13 @@ def download_and_read_metadata(url, tmp_dir, ambito_nome, year):
 
         xls = pd.ExcelFile(xlsx_path)
         rows = []
+
+        # 2023: colonne in italiano; anni precedenti: prefisso VAR_*
+        def _pick(df, *candidates):
+            for c in candidates:
+                if c in df.columns:
+                    return c
+            return None
 
         # Foglio 1: Indicatori
         sheet_ind = None
@@ -79,51 +113,66 @@ def download_and_read_metadata(url, tmp_dir, ambito_nome, year):
                 break
         if sheet_ind:
             df = pd.read_excel(xls, sheet_name=sheet_ind)
-            if {"VAR_IND_COD", "VAR_IND_DES"}.issubset(set(df.columns)):
+            cod_col = _pick(df, "VAR_IND_COD", "Codice Indicatore")
+            des_col = _pick(df, "VAR_IND_DES", "Descrizione")
+            if cod_col and des_col:
                 for _, r in df.iterrows():
-                    codice = str(r.get("VAR_IND_COD", "")).strip()
-                    desc = str(r.get("VAR_IND_DES", "")).strip()
+                    codice = str(r.get(cod_col, "")).strip()
+                    desc = str(r.get(des_col, "")).strip()
                     if codice and desc and codice != "nan":
                         rows.append(
                             {
                                 "codice_indicatore": codice,
                                 "descrizione": desc,
                                 "tipo": "IND",
-                                "categoria": str(r.get("VAR_IND_TIP", "")).strip(),
-                                "funzione": str(r.get("VAR_IND_FUNZIONE", "")).strip(),
-                                "ordine": str(r.get("VAR_IND_ORD", "")).strip(),
+                                "categoria": str(
+                                    r.get(_pick(df, "VAR_IND_TIP", "Tipo di indicatore") or "", "")
+                                ).strip(),
+                                "funzione": str(
+                                    r.get(_pick(df, "VAR_IND_FUNZIONE", "Funzione") or "", "")
+                                ).strip(),
+                                "ordine": str(
+                                    r.get(_pick(df, "VAR_IND_ORD", "Var Ord") or "", "")
+                                ).strip(),
                                 "anno": str(year),
                                 "ambito": ambito_nome,
                             }
                         )
 
-        # Foglio 2: Determinanti
+        # Foglio 2: Determinanti — 2023 usa il prefisso abbreviato "Det_"
         sheet_det = None
         for s in xls.sheet_names:
-            if s.upper().startswith("DETERMINANTI"):
+            su = s.upper()
+            if su.startswith("DETERMINANTI") or su.startswith("DET_"):
                 sheet_det = s
                 break
         if sheet_det:
             df = pd.read_excel(xls, sheet_name=sheet_det)
-            if {"VAR_DET_COD", "VAR_DET_DES"}.issubset(set(df.columns)):
+            cod_col = _pick(df, "VAR_DET_COD", "Codice Determinante")
+            des_col = _pick(df, "VAR_DET_DES", "Descrizione")
+            if cod_col and des_col:
                 for _, r in df.iterrows():
-                    codice = str(r.get("VAR_DET_COD", "")).strip()
-                    desc = str(r.get("VAR_DET_DES", "")).strip()
+                    codice = str(r.get(cod_col, "")).strip()
+                    desc = str(r.get(des_col, "")).strip()
                     if codice and desc and codice != "nan":
                         rows.append(
                             {
                                 "codice_indicatore": codice,
                                 "descrizione": desc,
                                 "tipo": "DET",
-                                "categoria": str(r.get("VAR_DET_CAT_DES", "")).strip(),
-                                "funzione": str(r.get("VAR_DET_FUNZIONE", "")).strip(),
+                                "categoria": str(
+                                    r.get(_pick(df, "VAR_DET_CAT_DES", "Categoria") or "", "")
+                                ).strip(),
+                                "funzione": str(
+                                    r.get(_pick(df, "VAR_DET_FUNZIONE", "Funzione") or "", "")
+                                ).strip(),
                                 "ordine": "",
                                 "anno": str(year),
                                 "ambito": ambito_nome,
                             }
                         )
 
-        # Foglio 3: Codici anomalia
+        # Foglio 3: Codici anomalia (identico tra anni)
         sheet_cod = None
         for s in xls.sheet_names:
             if s.upper().startswith("CODICI"):
@@ -174,19 +223,25 @@ def main():
         print(f"ERRORE: anno {year} non supportato. Usa: {list(YEAR_MAP.keys())}", file=sys.stderr)
         sys.exit(1)
 
-    prefix = YEAR_MAP[year]["prefix"]
+    is_portal = YEAR_MAP[year].get("portal", False)
+    prefix = YEAR_MAP[year].get("prefix")
 
     with tempfile.TemporaryDirectory() as tmp_dir:
         all_rows = []
         total_downloaded = 0
 
         for sigla, ambito_nome in AMBITI:
-            suffix = YEAR_MAP[year].get("suffix", "1")
-            if YEAR_MAP[year].get("no_year"):
+            if is_portal:
+                url = f"{PORTAL_BASE}{PORTAL_2023[sigla]}"
+            elif YEAR_MAP[year].get("no_year"):
+                suffix = YEAR_MAP[year].get("suffix", "1")
                 url = f"{BASE_URL}/Metadati_Ind_FC{prefix}{sigla}_{suffix}_xlsx.zip"
             else:
+                suffix = YEAR_MAP[year].get("suffix", "1")
                 url = f"{BASE_URL}/{year}_Metadati_Ind_FC{prefix}{sigla}_{suffix}_xlsx.zip"
-            rows = download_and_read_metadata(url, tmp_dir, ambito_nome, year)
+            rows = download_and_read_metadata(
+                url, tmp_dir, ambito_nome, year, direct_xlsx=is_portal
+            )
             if rows:
                 all_rows.extend(rows)
                 total_downloaded += 1

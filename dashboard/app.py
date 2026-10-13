@@ -28,6 +28,8 @@ pages = {
         st.Page("pages/03_classifiche.py", title="Classifiche", icon="🏆"),
         st.Page("pages/04_trend.py", title="Trend", icon="📈"),
         st.Page("pages/06_indicatori.py", title="Indicatori", icon="📊"),
+        st.Page("pages/08_fsc.py", title="FSC (fondi comunali)", icon="💰"),
+        st.Page("pages/07_province.py", title="Province (FPRCM)", icon="🏢"),
     ],
     "Strumenti": [
         st.Page("pages/05_esplora.py", title="SQL Explorer", icon="🧪"),

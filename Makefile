@@ -4,6 +4,7 @@ TOOLKIT = toolkit
 
 SUPPORT = \
 	support/opencivitas-fsc-enti-rso \
+	support/opencivitas-fprcm-enti \
 	support/opencivitas-glossario
 
 .PHONY: support
@@ -15,17 +16,20 @@ support:
 
 # --- Dataset principali ---
 
-.PHONY: run-determinanti run-fsc-rso run-indicatori run-all
+.PHONY: run-determinanti run-fsc-rso run-fprcm run-indicatori run-all
 run-determinanti:
 	$(TOOLKIT) run --config datasets/opencivitas-determinanti/dataset.yml
 
 run-fsc-rso:
 	$(TOOLKIT) run --config datasets/opencivitas-fsc-rso/dataset.yml
 
+run-fprcm:
+	$(TOOLKIT) run --config datasets/opencivitas-fprcm/dataset.yml
+
 run-indicatori:
 	$(TOOLKIT) run --config datasets/opencivitas-indicatori/dataset.yml
 
-run-all: support run-determinanti run-fsc-rso run-indicatori
+run-all: support run-determinanti run-fsc-rso run-fprcm run-indicatori
 
 # --- Validazione config ---
 

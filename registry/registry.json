@@ -2,7 +2,7 @@
   "schema_version": 1,
   "repo": "opencivitas",
   "source_repo": "dataciviclab/opencivitas",
-  "updated_at": "2026-10-13",
+  "updated_at": "2026-11-05",
   "datasets": [
     {
       "slug": "opencivitas_determinanti",
@@ -824,8 +824,8 @@
       "table": "mart_determinanti",
       "location": {
         "type": "gcs",
-        "path": "gs://dataciviclab-mart/opencivitas/opencivitas_determinanti/2022/mart_determinanti.parquet",
-        "multi_file": false
+        "path": "gs://dataciviclab-mart/opencivitas/opencivitas_determinanti/*/mart_determinanti.parquet",
+        "multi_file": true
       }
     },
     {
@@ -834,8 +834,8 @@
       "table": "mart_compose_province",
       "location": {
         "type": "gcs",
-        "path": "gs://dataciviclab-mart/opencivitas/opencivitas_fprcm/2026/mart_compose_province.parquet",
-        "multi_file": false
+        "path": "gs://dataciviclab-mart/opencivitas/opencivitas_fprcm/*/mart_compose_province.parquet",
+        "multi_file": true
       }
     },
     {
@@ -864,8 +864,8 @@
       "table": "mart_compose_comuni",
       "location": {
         "type": "gcs",
-        "path": "gs://dataciviclab-mart/opencivitas/opencivitas_fsc_rso/2026/mart_compose_comuni.parquet",
-        "multi_file": false
+        "path": "gs://dataciviclab-mart/opencivitas/opencivitas_fsc_rso/*/mart_compose_comuni.parquet",
+        "multi_file": true
       }
     },
     {
@@ -874,8 +874,8 @@
       "table": "mart_metadati",
       "location": {
         "type": "gcs",
-        "path": "gs://dataciviclab-mart/opencivitas/opencivitas_glossario/2023/mart_metadati.parquet",
-        "multi_file": false
+        "path": "gs://dataciviclab-mart/opencivitas/opencivitas_glossario/*/mart_metadati.parquet",
+        "multi_file": true
       }
     },
     {
@@ -884,8 +884,8 @@
       "table": "mart_comuni",
       "location": {
         "type": "gcs",
-        "path": "gs://dataciviclab-mart/opencivitas/opencivitas_indicatori/2023/mart_comuni.parquet",
-        "multi_file": false
+        "path": "gs://dataciviclab-mart/opencivitas/opencivitas_indicatori/*/mart_comuni.parquet",
+        "multi_file": true
       }
     },
     {
@@ -894,8 +894,8 @@
       "table": "mart_indicatori",
       "location": {
         "type": "gcs",
-        "path": "gs://dataciviclab-mart/opencivitas/opencivitas_indicatori/2023/mart_indicatori.parquet",
-        "multi_file": false
+        "path": "gs://dataciviclab-mart/opencivitas/opencivitas_indicatori/*/mart_indicatori.parquet",
+        "multi_file": true
       }
     }
   ],
@@ -1062,26 +1062,12 @@
       "detail": "anno 2025 — mart: si",
       "action": "",
       "run": {
-        "run_id": "20261013T102307Z_db5025f0",
+        "run_id": "20261105T141224Z_a53747f8",
         "year": 2025,
-        "status": "SUCCESS",
-        "quality_score": {
-          "raw": 100,
-          "clean": 100,
-          "mart": 100
-        },
-        "output_rows": {
-          "clean": 6573,
-          "mart": 6573
-        },
-        "output_bytes": {
-          "raw": 294463,
-          "clean": 85837,
-          "mart": 87422
-        },
-        "started_at": "2026-10-13T10:23:07.907410+00:00",
-        "finished_at": "2026-10-13T10:23:11.662486+00:00",
-        "duration_seconds": 3.755
+        "status": "FAILED",
+        "started_at": "2026-11-05T14:12:24.815471+00:00",
+        "finished_at": "2026-11-05T14:14:26.255930+00:00",
+        "duration_seconds": 121.44
       }
     },
     {

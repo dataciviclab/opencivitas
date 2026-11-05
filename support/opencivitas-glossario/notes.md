@@ -31,9 +31,11 @@ il portale nuovo parte dal 2017.)
 - Mappa esplicita `PORTAL` anno → {ambito: "nome/uuid"} nel preprocess: i
   suffissi variano tra anni (es. TOT 2019 `_2`, TOT 2022 `_1`) e non sono
   ricostruibili da una regola unica.
-- **2018 TOT mancante**: il metadati `servizi_totali` 2018 non è pubblicato
-  dalla fonte (né su portale né su Wayback). In `KNOWN_MISSING` → skip con
-  warning. Impatto: mancano 114 voci `servizi_totali` del 2018 → nel dataset
+- **2018 TOT non disponibile**: la pagina `servizi_totali` 2018 del portale
+  pubblica come metadato il file `2018_Metadati_Ind_FC50ISTRUZ_1.xlsx`
+  (**ambito istruzione**) — link non pertinente — e non il proprio
+  (`…FC50TOT_1`), che non esiste nemmeno su Wayback. In `KNOWN_MISSING` →
+  skip con warning. Impatto: mancano 114 voci `servizi_totali` del 2018 → nel dataset
   `opencivitas_indicatori` le **573.728 righe `servizi_totali` 2018** restano
   senza descrizione (`join_metadati_ok=False`). 75 degli 87 indicatori TOT 2018
   esistono nel glossario sotto altri ambiti, ma il join è su

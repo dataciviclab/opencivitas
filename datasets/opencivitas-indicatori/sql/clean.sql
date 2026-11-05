@@ -45,6 +45,14 @@ SELECT
   e.provincia,
   e.regione,
   e.regione_istat_cod,
+  -- Livello territoriale: la fonte include righe aggregate (regioni, ITALIA)
+  -- mescolate ai comuni. Le marchiamo per non sommarle per errore.
+  CASE
+    WHEN p.username LIKE 'ZZ999ITA%' THEN 'nazionale'
+    WHEN p.username LIKE 'ZZ999REG%' THEN 'regione'
+    WHEN p.username LIKE 'ZZ999%' THEN 'altro'
+    ELSE 'comune'
+  END AS livello_territoriale,
   e.denominazione IS NOT NULL AS join_enti_ok,
   m.descrizione IS NOT NULL AS join_metadati_ok
 FROM parsed p

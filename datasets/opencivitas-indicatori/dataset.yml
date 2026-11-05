@@ -54,6 +54,7 @@ clean:
     - regione_istat_cod
     - join_enti_ok
     - join_metadati_ok
+    - livello_territoriale
   validate:
     min_rows: 100000
     primary_key:

@@ -42,6 +42,7 @@ clean:
     - livello_servizi
     - livello_spesa
     - join_enti_ok
+    - livello_territoriale
   validate:
     min_rows: 5000
     primary_key:

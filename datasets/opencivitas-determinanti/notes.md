@@ -88,6 +88,16 @@ Le determinanti (F_*) variano tra anni per cambiamenti metodologici.
 - Sicilia e Sardegna escluse
 - Il numero di comuni varia ~±8 tra anni
 
+## Geografia e territorio
+
+- righe aggregate (regioni, ITALIA, aree `ZZ999*`) marchiate nel clean con
+  `livello_territoriale`, **escluse dal mart** (`= 'comune'`)
+- **username troncati nella fonte**: il RDF omette il prefisso provincia per
+  ~92 comuni/anno (es. `049SIF11OP` invece di `NA049SIF11OP`). Il clean li
+  recupera con una chiave normalizzata (fallback, usata solo se non ambigua):
+  nel 2023 i comuni non agganciati passano da 103 a 12
+- comuni fuori anagrafica (fusioni/abolizioni) restano con `join_enti_ok=false`
+
 ## Placeholder toolkit
 
 - `{root}` → output root

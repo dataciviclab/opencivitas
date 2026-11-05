@@ -49,14 +49,25 @@ WITH parsed AS (
 enti AS (
   SELECT *
   FROM read_parquet('{support.opencivitas_fsc_enti_rso.mart}')
+),
+-- Fallback per username troncati nella fonte RDF: alcuni comuni (capoluoghi)
+-- hanno `usr` senza prefisso provincia (es. 049SIF11OP invece di NA049SIF11OP).
+-- Chiave = username senza lettere iniziali, tenuta solo se non ambigua.
+enti_norm AS (
+  SELECT
+    regexp_replace(username, '^[A-Z]+', '') AS k,
+    denominazione, provincia, regione, regione_istat_cod
+  FROM enti
+  WHERE username NOT LIKE 'ZZ999%'
+  QUALIFY count(*) OVER (PARTITION BY regexp_replace(username, '^[A-Z]+', '')) = 1
 )
 SELECT
   {year} AS anno,
   p.username,
-  e.denominazione AS comune,
-  e.provincia,
-  e.regione,
-  e.regione_istat_cod,
+  COALESCE(e.denominazione, en.denominazione) AS comune,
+  COALESCE(e.provincia, en.provincia) AS provincia,
+  COALESCE(e.regione, en.regione) AS regione,
+  COALESCE(e.regione_istat_cod, en.regione_istat_cod) AS regione_istat_cod,
   -- Spesa standard vs storica
   p.spesa_standard,
   p.spesa_standard_procapite,
@@ -93,9 +104,20 @@ SELECT
   p.det_pendolari,
   p.det_immobili,
   p.det_fattore_contesto,
+  -- Livello territoriale: la fonte include righe aggregate (regioni, ITALIA,
+  -- aree) mescolate ai comuni. Le marchiamo per non sommarle per errore.
+  CASE
+    WHEN p.username LIKE 'ZZ999ITA%' THEN 'nazionale'
+    WHEN p.username LIKE 'ZZ999REG%' THEN 'regione'
+    WHEN p.username LIKE 'ZZ999%' THEN 'altro'
+    ELSE 'comune'
+  END AS livello_territoriale,
   -- Join quality
-  e.username IS NOT NULL AS join_enti_ok
+  (e.username IS NOT NULL OR en.k IS NOT NULL) AS join_enti_ok
 FROM parsed p
 LEFT JOIN enti e ON p.username = e.username
+LEFT JOIN enti_norm en
+  ON e.username IS NULL
+  AND regexp_replace(p.username, '^[A-Z]+', '') = en.k
 WHERE p.username IS NOT NULL
-ORDER BY e.regione, e.provincia, e.denominazione
+ORDER BY regione, provincia, comune

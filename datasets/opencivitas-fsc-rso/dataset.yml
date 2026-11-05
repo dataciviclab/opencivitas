@@ -73,6 +73,7 @@ clean:
     - fondo_perequativo
     - dotazione_finale_fsc
     - join_enti_ok
+    - livello_territoriale
   validate:
     min_rows: 1000
     primary_key:
@@ -82,7 +83,6 @@ clean:
       max_row_drop_pct: 100
     not_null:
       - "username"
-      - "comune"
       - "popolazione"
       - "join_enti_ok"
 
@@ -111,7 +111,6 @@ mart:
           - "dotazione_finale_fsc_procapite"
         not_null:
           - "username"
-          - "comune"
           - "popolazione"
           - "join_enti_ok"
 

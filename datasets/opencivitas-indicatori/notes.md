@@ -57,6 +57,8 @@ mart_trend (opzionale)
 - Glossario coperto: ~100% (eccezione: `servizi_totali` 2018, metadati non pubblicati dalla fonte)
 - Match ISTAT: 95-98% (crescente da 2017 a 2023, media ~96,5%)
 - Duplicati: 0 (sulla chiave username+anno+ambito+indicatore)
+- Righe aggregate (regioni/ITALIA) presenti nella fonte: marchiate nel clean con
+  `livello_territoriale`, **escluse da `mart_comuni`** (`= 'comune'`)
 
 ## Placeholder toolkit
 

@@ -19,5 +19,5 @@ I dati OpenCivitas sono pubblici e scaricabili liberamente dal portale ANCI. Il 
 - **Anno 2020 mancante**: L'anno 2020 non e presente nei dati OpenCivitas per indicatori e determinanti.
 - **2015-2016 fuori copertura**: il portale nuovo copre dal 2017; 2015-2016 sono usciti dalla pipeline (dato storico congelato su GCS).
 - **Glossario 2018 TOT mancante**: il metadati `servizi_totali` 2018 non è pubblicato dalla fonte (né su portale né su Wayback).
-- **Aggregati regionali**: Alcuni record hanno provincia vuota (aggregati regionali). La dashboard li filtra.
+- **Aggregati regionali**: le fonti includono regioni e ITALIA insieme ai comuni. Il clean li marca con `livello_territoriale`; i mart contengono **solo comuni** (nessun doppio conteggio).
 - **Join su username**: Il campo `username` e la chiave primaria per unire enti, FSC e indicatori.

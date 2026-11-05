@@ -87,4 +87,7 @@ SELECT
   -- Join quality
   join_enti_ok
 FROM enriched
+-- Solo comuni: le righe aggregate (regioni, ITALIA, aree) restano nel clean,
+-- marcate da livello_territoriale.
+WHERE livello_territoriale = 'comune'
 ORDER BY regione, provincia, comune

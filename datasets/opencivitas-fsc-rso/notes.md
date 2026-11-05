@@ -23,6 +23,12 @@
 - migrazione 2026-10: da `type: script` (preprocess.py, ZIP docs) a `http_file`
   per-anno sul portale — regressione verificata via run records `_runs/`
   (raw/clean/mart identici ai run precedenti basati su docs)
+- righe aggregate (15 regioni RSO + ITALIA) presenti nella fonte: marchiate nel
+  clean con `livello_territoriale`, escluse dal mart (`= 'comune'`)
+- join anagrafica **LEFT** (non scarta più i comuni fuori anagrafica): restano
+  con geografia NULL e `join_enti_ok=false` (2017: 24, 2023: 9, 2026: 0).
+  L'anagrafica è single-year 2025 → il recupero completo richiede un'anagrafica
+  multi-anno (follow-up)
 
 ## Anni
 

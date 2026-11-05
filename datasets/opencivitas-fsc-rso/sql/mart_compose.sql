@@ -31,4 +31,7 @@ select
     else null
   end as dotazione_finale_fsc_procapite
 from clean_input
+-- Solo comuni: le righe aggregate (regioni, ITALIA) restano nel clean,
+-- marcate da livello_territoriale.
+where livello_territoriale = 'comune'
 order by regione, provincia, comune

@@ -44,3 +44,28 @@ packages = []
 
 [tool.toolkit.extends]
 source_id = "opencivitas"
+
+[tool.observatory]
+source_id = "opencivitas"
+protocol = "html"
+base_url = "https://www.opencivitas.it/portale/open-data"
+observation_mode = "catalog-watch"
+verdict = "go"
+note = "Portale Liferay OpenCivitas (live 2026-06). File consumati come URL diretti con UUID su /portale/documents/20118/0/. Il vecchio dominio docs.opencivitas.it è dismesso. Inventario via tabella catalogo Liferay; le faccette anno (2017-2026 + 'Altre annualità') richiedono iterazione per anno — vedi follow-up."
+
+[[tool.observatory.pattern_probes]]
+name = "fsc-2026-portale"
+url = "https://www.opencivitas.it/portale/documents/20118/0/2026_VAR_FSC_1_2026_IT.csv/63988461-9ae1-ce7d-13f0-fab3c9c7b77a"
+
+[[tool.observatory.pattern_probes]]
+name = "fprcm-2026-portale"
+url = "https://www.opencivitas.it/portale/documents/20118/0/2026_FPRCM_01_2026_IT.csv/02f9598f-6fb4-68cd-3346-80210af7ea56"
+
+[tool.observatory.html_portal]
+topic_hint = "trasparenza"
+extraction = "liferay_catalog"
+page_url_template = "https://www.opencivitas.it/portale/open-data?xpage={page}&xdelta=6"
+page_max = 25
+delay_seconds = 0.3
+timeout_seconds = 10
+max_retries = 1

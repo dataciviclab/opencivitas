@@ -11,7 +11,7 @@ Formato EAV (Entity-Attribute-Value) arricchito con geografia e descrizioni.
 | Colonna | Tipo | Note |
 |---|---|---|
 | `username` | VARCHAR | Codice ente Sogei (chiave) |
-| `anno` | INTEGER | 2015-2022 (escluso 2020) |
+| `anno` | INTEGER | 2017-2023 (escluso 2020) |
 | `ambito` | VARCHAR | Servizio: `amministrazione`, `istruzione`, `polizia_locale`, `rifiuti`, `sociale_asili_nido`, `viabilita_territorio`, `servizi_totali` |
 | `indicatore` | VARCHAR | Nome indicatore (es. `COPERTURA_NID_NEW`) |
 | `valore_num` | DOUBLE | Valore numerico |
@@ -24,10 +24,10 @@ Formato EAV (Entity-Attribute-Value) arricchito con geografia e descrizioni.
 
 ## Copertura
 
-- **7 anni**: 2015, 2016, 2017, 2018, 2019, 2021, 2022 (2020 assente)
+- **6 anni**: 2017, 2018, 2019, 2021, 2022, 2023 (2020 assente)
 - **7 ambiti** tematici per anno
 - **~280 indicatori** per anno (media)
-- **19,4M righe** clean (7 anni)
+- **~19M righe** clean (6 anni)
 - **~90% comuni italiani** coperti (RSO)
 
 ## Support dataset
@@ -40,7 +40,7 @@ Formato EAV (Entity-Attribute-Value) arricchito con geografia e descrizioni.
 
 ## Pipeline
 
-1. `preprocess.py {year} raw_input.csv` — scarica 7 ZIP, estrae CSV, unisce in EAV
+1. `preprocess.py {year} raw_input.csv` — scarica i 7 CSV ambito dal portale, li unisce in EAV
 2. `sql/clean.sql` — normalizza valori, join enti + glossario
 3. Mart:
    - **`mart_comuni`**: arricchimento + benchmark (media nazionale/regionale, percentile, fascia, distanza %) — fonde i vecchi `mart.sql` + `mart_benchmark`

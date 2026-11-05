@@ -11,7 +11,7 @@ st.title("📈 Trend")
 st.markdown("Evoluzione delle performance dei comuni italiani nel tempo.")
 st.caption(
     f"Anni: {YEARS_DET[0]}–{YEARS_DET[-1]} (salto 2020) — "
-    "le determinanti si fermano al 2022; per i fondi FSC fino al 2026 vedi la pagina FSC"
+    "le determinanti si fermano al 2023; per i fondi FSC fino al 2026 vedi la pagina FSC"
 )
 
 df = load_determinanti_all()

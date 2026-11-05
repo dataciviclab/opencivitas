@@ -2,7 +2,7 @@
 
 **Dizionario degli indicatori, determinanti e codici OpenCivitas.**
 
-Unisce i 3 fogli dei file XLSX di metadati (`{year}_Metadati_Ind_FC{code}_{n}_xlsx.zip`):
+Unisce i 3 fogli dei file XLSX di metadati dal portale Liferay (`{year}_Metadati_Ind_FC{code}_{sigla}_{n}`, URL con UUID):
 
 | Tipo | Foglio | Descrizione | Righe/anno |
 |---|---|---|---|
@@ -23,6 +23,6 @@ mart.sql → pass-through (select * from clean_input)
 
 ## Anni
 
-2015, 2016, 2017, 2018, 2019, 2021, 2022 — ogni anno produce il suo mart.
-(2020 assente: solo FSC, nessun indicatore pubblicato.)
+2017, 2018, 2019, 2021, 2022, 2023 — ogni anno produce il suo mart.
+(2020 assente: solo FSC, nessun indicatore pubblicato. 2015-2016 fuori copertura: il portale parte dal 2017.)
 Il candidate principale referenzia il mart con `{root}/data/mart/opencivitas_glossario/{year}/mart_metadati.parquet`.

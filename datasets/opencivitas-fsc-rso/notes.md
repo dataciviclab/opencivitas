@@ -12,7 +12,7 @@
   dall'inventario catalog-watch (`out/so/inventory.parquet` / `registry/catalog.json`)
 - CSV con `;` come delimitatore e `,` come separatore decimale, header presente (filtrato dal clean via `componente IN (...)`)
 - shape long, una riga per componente di calcolo del fondo
-- source B: ZIP con workbook `Metadati_Enti_FSC_2025.xlsx` (support `opencivitas_fsc_enti_rso`)
+- source B: XLSX `Metadati_Enti_FSC_2025.xlsx` dal portale (support `opencivitas_fsc_enti_rso`)
 - source B: sheet `anagrafica_enti2025` (sheet_name statico, non templabile con {year})
 - chiave di join comune: `USERNAME`
 - 2019: mai pubblicato dalla fonte (gap confermato su docs e portale)

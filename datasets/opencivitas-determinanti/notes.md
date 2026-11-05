@@ -4,7 +4,7 @@
 
 1. **`F_POP_C` NON èla popolazione** — èun indice demografico (~54). La popolazione reale si calcola da `spesa_standard / spesa_standard_procapite`
 2. **`provincia` ècodice ISTAT** (es. "100"=FI) — il RDF non ha i nomi delle province
-3. **Formato decimale misto** — 2015/2022 usano il punto, 2017-2019 la virgola. Fix: normalizzazione nel preprocess.py
+3. **Formato decimale misto** — i valori con virgola sono normalizzati a punto nel preprocess.py
 4. **`normalize_italian_number`** trattava il punto come separatore migliaia → usare `TRY_CAST` diretto dopo normalizzazione
 
 ## Origine
@@ -39,7 +39,7 @@ Il file RDF del TOT (servizi totali aggregati) contiene per ogni comune:
 
 ```
 preprocess.py {year} raw_input.csv
-  → scarica ZIP RDF, parse XML <vi:rig>, converte in CSV wide
+  → scarica il RDF TOT dal portale, parse XML <vi:rig>, converte in CSV wide
 
 clean.sql
   → normalizza colonne (cast double, NULLIF vuoti)
@@ -55,18 +55,26 @@ mart_determinanti.sql
 
 | Anno | Comuni | Colonne RDF | Note |
 |------|--------|-------------|------|
-| 2015 | 6.694 | 90 | Primo anno disponibile |
-| 2016 | 6.677 | 90 | |
 | 2017 | 6.657 | 98 | Aggiunte determinanti |
 | 2018 | 6.636 | 98 | |
 | 2019 | 6.597 | 97 | |
 | 2020 | — | — | Non disponibile (salto) |
 | 2021 | 6.595 | 91 | |
-| 2022 | 6.587 | 84 | Ultimo anno disponibile |
+| 2022 | 6.587 | 84 | |
+| 2023 | 6.587 | 95 | Ultimo anno disponibile |
+
+> 2015-2016 fuori copertura: il portale Liferay (unica fonte, `docs.opencivitas.it`
+> dismesso) parte dal 2017.
+>
+> 2022: il portale espone solo il RDF `2022_FC80TOT_2`, che ha 2 comuni in meno
+> del vecchio `2022_FC80TOT_1` (docs/Wayback): mancano `AL001SIF11BR`,
+> `AL002SIF11BS` → 6585 righe invece di 6587. Il RDF 2022 del portale è anche
+> XML malformato (header rotto, path locali Sogei): il preprocess ha un parser
+> tollerante di fallback.
 
 ## Colonne chiave stabili (presenti in tutti gli anni)
 
-Le 18 colonne spesa/performance sono garantite in tutti i 7 anni:
+Le 18 colonne spesa/performance sono garantite in tutti i 6 anni:
 `SPESA_STORICA`, `SPESA_STORICA_PROAB`, `FST_RIPROPORZIONATO_BI`,
 `FST_RIPROPORZIONATO_BI_PROAB`, `POSIZIONE_OUTPUT_PERC_TOT`,
 `POSIZIONE_SPESA_PERC_TOT`, `COORD_OUT`, `COORD_SPESA`,

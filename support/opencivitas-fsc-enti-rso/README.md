@@ -22,10 +22,14 @@ agganciare:
 Fonte principale:
 
 - OpenCivitas / Sogei, metadati enti FSC 2025
-- file:
-   `http://docs.opencivitas.it/Metadati_Enti_FSC_2025_xlsx.zip` (HTTPS fallisce per certificato Sectigo senza catena intermedia)
+- portale Liferay OpenCivitas (XLSX diretto, URL con UUID):
+   `https://www.opencivitas.it/portale/documents/20118/0/Metadati_Enti_FSC_2025/ce487ca0-53ee-5162-7df9-24307a773af4`
 - workbook: `Metadati_Enti_FSC_2025.xlsx`
 - sheet: `anagrafica_enti2025`
+
+> Nota: fino a ottobre 2026 la fonte era lo ZIP
+> `http://docs.opencivitas.it/Metadati_Enti_FSC_2025_xlsx.zip`. Il dominio
+> `docs.opencivitas.it` è stato dismesso; la fonte è migrata al portale.
 
 ## Output minimo atteso
 

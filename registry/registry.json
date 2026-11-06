@@ -2,7 +2,7 @@
   "schema_version": 1,
   "repo": "opencivitas",
   "source_repo": "dataciviclab/opencivitas",
-  "updated_at": "2026-10-13",
+  "updated_at": "2026-11-06",
   "datasets": [
     {
       "slug": "opencivitas_determinanti",
@@ -11,8 +11,8 @@
       "source": "https://www.opencivitas.it/",
       "source_id": "opencivitas",
       "period": {
-        "start": 2015,
-        "end": 2022
+        "start": 2017,
+        "end": 2023
       },
       "tags": [
         "finanza-pubblica",
@@ -225,6 +225,12 @@
           "name": "det_fattore_contesto",
           "type": "DOUBLE",
           "role": "metric",
+          "description": ""
+        },
+        {
+          "name": "livello_territoriale",
+          "type": "VARCHAR",
+          "role": "dimension",
           "description": ""
         },
         {
@@ -597,6 +603,12 @@
           "description": ""
         },
         {
+          "name": "livello_territoriale",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
           "name": "join_enti_ok",
           "type": "BOOLEAN",
           "role": "dimension",
@@ -620,7 +632,7 @@
       "source": "https://www.opencivitas.it/",
       "source_id": "opencivitas",
       "period": {
-        "start": 2015,
+        "start": 2017,
         "end": 2023
       },
       "tags": [
@@ -698,7 +710,7 @@
       "source": "https://www.opencivitas.it/",
       "source_id": "opencivitas",
       "period": {
-        "start": 2015,
+        "start": 2017,
         "end": 2023
       },
       "tags": [
@@ -793,6 +805,12 @@
           "semantic_type": "region_code"
         },
         {
+          "name": "livello_territoriale",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
           "name": "join_enti_ok",
           "type": "BOOLEAN",
           "role": "dimension",
@@ -824,8 +842,8 @@
       "table": "mart_determinanti",
       "location": {
         "type": "gcs",
-        "path": "gs://dataciviclab-mart/opencivitas/opencivitas_determinanti/2022/mart_determinanti.parquet",
-        "multi_file": false
+        "path": "gs://dataciviclab-mart/opencivitas/opencivitas_determinanti/*/mart_determinanti.parquet",
+        "multi_file": true
       }
     },
     {
@@ -834,8 +852,8 @@
       "table": "mart_compose_province",
       "location": {
         "type": "gcs",
-        "path": "gs://dataciviclab-mart/opencivitas/opencivitas_fprcm/2026/mart_compose_province.parquet",
-        "multi_file": false
+        "path": "gs://dataciviclab-mart/opencivitas/opencivitas_fprcm/*/mart_compose_province.parquet",
+        "multi_file": true
       }
     },
     {
@@ -864,8 +882,8 @@
       "table": "mart_compose_comuni",
       "location": {
         "type": "gcs",
-        "path": "gs://dataciviclab-mart/opencivitas/opencivitas_fsc_rso/2026/mart_compose_comuni.parquet",
-        "multi_file": false
+        "path": "gs://dataciviclab-mart/opencivitas/opencivitas_fsc_rso/*/mart_compose_comuni.parquet",
+        "multi_file": true
       }
     },
     {
@@ -874,8 +892,8 @@
       "table": "mart_metadati",
       "location": {
         "type": "gcs",
-        "path": "gs://dataciviclab-mart/opencivitas/opencivitas_glossario/2023/mart_metadati.parquet",
-        "multi_file": false
+        "path": "gs://dataciviclab-mart/opencivitas/opencivitas_glossario/*/mart_metadati.parquet",
+        "multi_file": true
       }
     },
     {
@@ -884,8 +902,8 @@
       "table": "mart_comuni",
       "location": {
         "type": "gcs",
-        "path": "gs://dataciviclab-mart/opencivitas/opencivitas_indicatori/2023/mart_comuni.parquet",
-        "multi_file": false
+        "path": "gs://dataciviclab-mart/opencivitas/opencivitas_indicatori/*/mart_comuni.parquet",
+        "multi_file": true
       }
     },
     {
@@ -894,8 +912,8 @@
       "table": "mart_indicatori",
       "location": {
         "type": "gcs",
-        "path": "gs://dataciviclab-mart/opencivitas/opencivitas_indicatori/2023/mart_indicatori.parquet",
-        "multi_file": false
+        "path": "gs://dataciviclab-mart/opencivitas/opencivitas_indicatori/*/mart_indicatori.parquet",
+        "multi_file": true
       }
     }
   ],
@@ -905,11 +923,11 @@
       "source_id": "opencivitas",
       "status": "ok",
       "label": "opencivitas_determinanti",
-      "detail": "anni 2015-2022 — mart: si",
+      "detail": "anni 2017-2023 — mart: si",
       "action": "",
       "run": {
-        "run_id": "20261013T102531Z_f79a0935",
-        "year": 2022,
+        "run_id": "20261106T102920Z_945a9f8f",
+        "year": 2023,
         "status": "SUCCESS",
         "quality_score": {
           "raw": 100,
@@ -919,16 +937,16 @@
         "output_rows": {
           "raw": 6587,
           "clean": 6587,
-          "mart": 6587
+          "mart": 6557
         },
         "output_bytes": {
-          "raw": 4964939,
-          "clean": 925400,
-          "mart": 947350
+          "raw": 5536417,
+          "clean": 925376,
+          "mart": 940687
         },
-        "started_at": "2026-10-13T10:25:31.690428+00:00",
-        "finished_at": "2026-10-13T10:25:36.202133+00:00",
-        "duration_seconds": 4.512
+        "started_at": "2026-11-06T10:29:20.176793+00:00",
+        "finished_at": "2026-11-06T10:29:42.038824+00:00",
+        "duration_seconds": 21.862
       }
     },
     {
@@ -939,7 +957,7 @@
       "detail": "anni 2022-2026 — mart: si",
       "action": "",
       "run": {
-        "run_id": "20261013T102702Z_d697332b",
+        "run_id": "20261106T103103Z_689ba456",
         "year": 2026,
         "status": "SUCCESS",
         "quality_score": {
@@ -957,9 +975,9 @@
           "clean": 7594,
           "mart": 10145
         },
-        "started_at": "2026-10-13T10:27:02.323524+00:00",
-        "finished_at": "2026-10-13T10:27:03.502694+00:00",
-        "duration_seconds": 1.179
+        "started_at": "2026-11-06T10:31:03.659693+00:00",
+        "finished_at": "2026-11-06T10:31:04.736035+00:00",
+        "duration_seconds": 1.076
       }
     },
     {
@@ -970,7 +988,7 @@
       "detail": "anni 2017-2026 — mart: si",
       "action": "",
       "run": {
-        "run_id": "20261013T102646Z_f486b368",
+        "run_id": "20261106T103049Z_8b043459",
         "year": 2026,
         "status": "SUCCESS",
         "quality_score": {
@@ -981,16 +999,16 @@
         "output_rows": {
           "raw": 184016,
           "clean": 6572,
-          "mart": 6572
+          "mart": 6556
         },
         "output_bytes": {
           "raw": 8861581,
-          "clean": 255151,
-          "mart": 404729
+          "clean": 255509,
+          "mart": 403190
         },
-        "started_at": "2026-10-13T10:26:46.480323+00:00",
-        "finished_at": "2026-10-13T10:26:55.588746+00:00",
-        "duration_seconds": 9.108
+        "started_at": "2026-11-06T10:30:49.580797+00:00",
+        "finished_at": "2026-11-06T10:30:57.673923+00:00",
+        "duration_seconds": 8.093
       }
     },
     {
@@ -998,10 +1016,10 @@
       "source_id": "opencivitas",
       "status": "ok",
       "label": "opencivitas_indicatori",
-      "detail": "anni 2015-2023 — mart: si",
+      "detail": "anni 2017-2023 — mart: si",
       "action": "",
       "run": {
-        "run_id": "20261013T103147Z_ee207f62",
+        "run_id": "20261106T104438Z_b176afe8",
         "year": 2023,
         "status": "SUCCESS",
         "quality_score": {
@@ -1012,16 +1030,16 @@
         "output_rows": {
           "raw": 2964150,
           "clean": 2677968,
-          "mart": 6883
+          "mart": 6867
         },
         "output_bytes": {
           "raw": 181049884,
-          "clean": 12236171,
-          "mart": 712475
+          "clean": 12242370,
+          "mart": 710147
         },
-        "started_at": "2026-10-13T10:31:47.292054+00:00",
-        "finished_at": "2026-10-13T10:34:21.570250+00:00",
-        "duration_seconds": 154.278
+        "started_at": "2026-11-06T10:44:38.602989+00:00",
+        "finished_at": "2026-11-06T10:47:07.941682+00:00",
+        "duration_seconds": 149.339
       }
     },
     {
@@ -1032,7 +1050,7 @@
       "detail": "anno 2026 — mart: si",
       "action": "",
       "run": {
-        "run_id": "20261013T102312Z_502307ce",
+        "run_id": "20261106T102708Z_6b8738c6",
         "year": 2026,
         "status": "SUCCESS",
         "quality_score": {
@@ -1047,11 +1065,11 @@
         "output_bytes": {
           "raw": 13304,
           "clean": 3456,
-          "mart": 3483
+          "mart": 3464
         },
-        "started_at": "2026-10-13T10:23:12.745707+00:00",
-        "finished_at": "2026-10-13T10:23:13.892092+00:00",
-        "duration_seconds": 1.146
+        "started_at": "2026-11-06T10:27:08.102735+00:00",
+        "finished_at": "2026-11-06T10:27:09.244700+00:00",
+        "duration_seconds": 1.142
       }
     },
     {
@@ -1062,7 +1080,7 @@
       "detail": "anno 2025 — mart: si",
       "action": "",
       "run": {
-        "run_id": "20261013T102307Z_db5025f0",
+        "run_id": "20261106T102704Z_20a09847",
         "year": 2025,
         "status": "SUCCESS",
         "quality_score": {
@@ -1079,9 +1097,9 @@
           "clean": 85837,
           "mart": 87422
         },
-        "started_at": "2026-10-13T10:23:07.907410+00:00",
-        "finished_at": "2026-10-13T10:23:11.662486+00:00",
-        "duration_seconds": 3.755
+        "started_at": "2026-11-06T10:27:04.656407+00:00",
+        "finished_at": "2026-11-06T10:27:07.092795+00:00",
+        "duration_seconds": 2.436
       }
     },
     {
@@ -1089,10 +1107,10 @@
       "source_id": "opencivitas",
       "status": "ok",
       "label": "opencivitas_glossario",
-      "detail": "anni 2015-2023 — mart: si",
+      "detail": "anni 2017-2023 — mart: si",
       "action": "",
       "run": {
-        "run_id": "20261013T102454Z_de5afb9b",
+        "run_id": "20261106T102732Z_09dc648d",
         "year": 2023,
         "status": "SUCCESS",
         "quality_score": {
@@ -1110,9 +1128,9 @@
           "clean": 10355,
           "mart": 10355
         },
-        "started_at": "2026-10-13T10:24:54.335571+00:00",
-        "finished_at": "2026-10-13T10:24:59.102400+00:00",
-        "duration_seconds": 4.767
+        "started_at": "2026-11-06T10:27:32.549705+00:00",
+        "finished_at": "2026-11-06T10:27:37.032605+00:00",
+        "duration_seconds": 4.483
       }
     }
   ],

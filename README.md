@@ -9,8 +9,8 @@ OpenCivitas Intelligence incrocia i dati della finanza comunale (FSC — Fondo d
 | | |
 |---|---|
 | **Comuni coperti** | ~6.600 (su ~7.900 totali) |
-| **Periodo finanza** | 2017 — 2025 |
-| **Periodo indicatori** | 2015 — 2022 |
+| **Periodo finanza** | 2017 — 2026 |
+| **Periodo indicatori** | 2017 — 2023 |
 | **Ambiti indicatori** | 7 (Rifiuti, Istruzione, Sociale, Viabilita, Amministrazione, ...) |
 | **Indicatori core** | 13 (performance + contesto) |
 

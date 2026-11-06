@@ -11,15 +11,18 @@ dataset:
     start_year: 2025
     end_year: 2025
 
+# Fonte: portale Liferay OpenCivitas (XLSX diretto, URL con UUID).
+# Il vecchio ZIP su docs.opencivitas.it è dismesso (dominio non più raggiungibile).
+# Se il run va in 404, recuperare il nuovo URL dall'inventario del catalog-watch
+# (registry/catalog.json / out/so/inventory.parquet).
 raw:
-  extractor:
-    type: "unzip_first"
+  output_policy: overwrite
   sources:
-    - name: "opencivitas_fsc_enti_2025_zip"
+    - name: "opencivitas_fsc_enti_2025_xlsx"
       type: "http_file"
       args:
-        url: "http://docs.opencivitas.it/Metadati_Enti_FSC_2025_xlsx.zip"
-        filename: "Metadati_Enti_FSC_2025_xlsx.zip"
+        url: "https://www.opencivitas.it/portale/documents/20118/0/Metadati_Enti_FSC_2025/ce487ca0-53ee-5162-7df9-24307a773af4"
+        filename: "Metadati_Enti_FSC_2025.xlsx"
       primary: true
 
 clean:

@@ -42,6 +42,7 @@ Benchmarking comuni: spesa standard vs storica, performance, quadrante.
 | livello_spesa | FLOAT | Indice livello spesa |
 | quadrante | VARCHAR | A (alto servizio, bassa spesa) / B / C / D |
 | fascia_popolazione | VARCHAR | Fascia demografica |
+| livello_territoriale | VARCHAR | `comune` / `regione` / `nazionale` / `altro` — solo nel **clean**; il mart è solo comuni |
 
 ## opencivitas_fsc_rso
 
@@ -59,6 +60,7 @@ FSC (Fondo di Solidarieta Comunale) multi-anno.
 | capacita_fiscale_procapite | FLOAT | Capacita fiscale pro-capite |
 | fondo_perequativo_procapite | FLOAT | Fondo perequativo pro-capite |
 | dotazione_finale_fsc_procapite | FLOAT | Dotazione FSC pro-capite |
+| livello_territoriale | VARCHAR | `comune` / `regione` / `nazionale` / `altro` — solo nel **clean**; il mart è solo comuni |
 
 ## opencivitas_indicatori
 
@@ -78,3 +80,22 @@ Indicatori di servizio multi-ambito, formato EAV.
 | denominazione | VARCHAR | Nome ente |
 | provincia | VARCHAR | Sigla provincia |
 | regione | VARCHAR | Nome regione |
+| livello_territoriale | VARCHAR | `comune` / `regione` / `nazionale` / `altro` — solo nel **clean**; il mart è solo comuni |
+
+## Livello territoriale (clean vs mart)
+
+Le fonti OpenCivitas includono, insieme ai comuni, **righe aggregate** (le 15
+regioni RSO e ITALIA, più alcune aree). Per evitare doppi conteggi:
+
+- il **clean** conserva tutte le righe della fonte e le marca con
+  `livello_territoriale` (`comune` / `regione` / `nazionale` / `altro`);
+- i **mart** `*_comuni` / `*_determinanti` filtrano `livello_territoriale = 'comune'`
+  → contengono **solo comuni** (nessuna regione o ITALIA).
+
+Per i totali regionali/nazionali usare le righe aggregate del clean (valori
+ufficiali della fonte), non sommare i mart.
+
+**Comuni senza geografia**: alcuni comuni non si agganciano all'anagrafica
+(single-year 2025) — fusioni/abolizioni, oppure username troncati nella fonte
+RDF. Nel clean/mart hanno `join_enti_ok = false`; i determinanti recuperano i
+troncati via chiave normalizzata (`049SIF11OP` → `NA049SIF11OP`).

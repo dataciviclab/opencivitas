@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 """Scarica il RDF TOT OpenCivitas per un anno e converte in CSV wide.
 
-Pattern URL:
-  2015: https://docs.opencivitas.it/2015_FC20TOT_2_rdf.zip
-  2016-2022: https://docs.opencivitas.it/{year}_FC{prefix}TOT_{suffix}_rdf.zip
+Fonte: portale Liferay OpenCivitas, RDF TOT diretto (URL con UUID).
+Il vecchio dominio docs.opencivitas.it è dismesso.
 
 Il file RDF e' XML con elementi <vi:rig> che hanno attributi = colonne wide.
 Le colonne variano tra anni. Questo script le normalizza in nomi canonici.
@@ -14,25 +13,26 @@ Usage: python preprocess.py <year> <output.csv>
 
 import csv
 import os
+import re
 import sys
 import tempfile
 import xml.etree.ElementTree as ET
-import zipfile
 from pathlib import Path
 
 from lab_connectors.http.download import download
 
-BASE_URL = "https://docs.opencivitas.it"
+# Portale Liferay OpenCivitas: RDF diretti (URL con UUID). Se un run va in 404,
+# recuperare il nuovo URL dall'inventario del catalog-watch (registry/catalog.json).
+PORTAL_BASE = "https://www.opencivitas.it/portale/documents/20118/0/"
 
-# Mappa anno -> (prefix, suffix) per URL pattern RDF TOT
-YEAR_MAP = {
-    2015: ("20", "2"),
-    2016: ("30", "1"),
-    2017: ("40", "1"),
-    2018: ("50", "1"),
-    2019: ("60", "1"),
-    2021: ("70", "1"),
-    2022: ("80", "1"),
+# anno -> "nome-file/uuid"
+PORTAL = {
+    2017: "2017_FC40TOT_1/2b0da7cb-b367-4523-a68b-3b4c6a2e94cb",
+    2018: "2018_FC50TOT_1/cfb46730-cbc5-8529-cb1e-18eb85f7a267",
+    2019: "2019_FC60TOT_2/03d21b26-01b5-b027-9118-5d9cca642fad",
+    2021: "2021_FC70TOT_1/231c6dba-1a2e-954e-1723-d9a5a11d304f",
+    2022: "2022_FC80TOT_2/7e9b2068-2de1-5ee2-ef53-34d8166e3800",
+    2023: "2023_FC90_TOT_1_IT.rdf/a1a8327c-6493-e0b7-d5ac-9284751e81c7",
 }
 
 # Colonne da escludere (junk / empty in alcuni anni)
@@ -163,42 +163,64 @@ CANONICAL_COLS = [
 ]
 
 
-def download_and_extract_rdf(url, tmp_dir):
-    """Scarica un file ZIP e restituisce il path del file .rdf estratto."""
-    zip_path = os.path.join(tmp_dir, "temp.zip")
+def download_rdf(url, tmp_dir):
+    """Scarica il file RDF diretto e restituisce il path locale."""
+    rdf_path = os.path.join(tmp_dir, "tot.rdf")
     try:
         data = download(url, timeout=60)
     except RuntimeError:
         return None
     try:
-        with open(zip_path, "wb") as f:
+        with open(rdf_path, "wb") as f:
             f.write(data)
-        with zipfile.ZipFile(zip_path) as zf:
-            rdf_files = [f for f in zf.namelist() if f.endswith(".rdf")]
-            if not rdf_files:
-                return None
-            rdf_name = rdf_files[0]
-            zf.extract(rdf_name, tmp_dir)
-            return os.path.join(tmp_dir, rdf_name)
+        return rdf_path
     except Exception:
         return None
 
 
+def _iter_rig_attrs(rdf_path):
+    """Estrae gli attributi di ogni <vi:rig> come {nome_locale: valore}.
+
+    Usa ElementTree; se il file è XML malformato (es. il RDF 2022 del portale
+    ha header rotto e path locali Sogei) ricade su una scansione tollerante:
+    gli elementi <vi:rig ... /> sono self-contained e integri.
+    """
+    try:
+        tree = ET.parse(rdf_path)
+        root = tree.getroot()
+        rigs = root.findall(f".//{{{RDF_NS}}}rig")
+        if rigs:
+            out = []
+            for rig in rigs:
+                out.append(
+                    {
+                        (k.split("}")[-1] if "}" in k else k): v
+                        for k, v in rig.attrib.items()
+                    }
+                )
+            return out
+    except ET.ParseError:
+        pass
+
+    with open(rdf_path, encoding="utf-8", errors="replace") as f:
+        text = f.read()
+    out = []
+    for attrs in re.findall(r"<vi:rig\b([^>]*?)/>", text):
+        out.append({m.group(1).split(":")[-1]: m.group(2) for m in re.finditer(r'([\w:]+)="([^"]*)"', attrs)})
+    return out
+
+
 def parse_rdf_to_rows(rdf_path):
     """Parse XML RDF e restituisce (lista di dict, lista colonne normalizzate)."""
-    tree = ET.parse(rdf_path)
-    root = tree.getroot()
-
-    rigs = root.findall(f".//{{{RDF_NS}}}rig")
+    rigs = _iter_rig_attrs(rdf_path)
     if not rigs:
         return [], []
 
     all_cols_set = set()
     rows = []
-    for rig in rigs:
+    for attrs in rigs:
         row = {}
-        for attr_key, attr_val in rig.attrib.items():
-            col_name = attr_key.split("}")[-1] if "}" in attr_key else attr_key
+        for col_name, attr_val in attrs.items():
             if col_name in EXCLUDE_COLS:
                 continue
             normalized = COL_RENAME.get(col_name, col_name)
@@ -221,18 +243,17 @@ def main():
     year = int(sys.argv[1])
     output_path = Path(sys.argv[2])
 
-    if year not in YEAR_MAP:
+    if year not in PORTAL:
         print(
-            f"ERRORE: anno {year} non configurato. Supportati: {list(YEAR_MAP.keys())}",
+            f"ERRORE: anno {year} non configurato. Supportati: {sorted(PORTAL.keys())}",
             file=sys.stderr,
         )
         sys.exit(1)
 
-    prefix, suffix = YEAR_MAP[year]
-    url = f"{BASE_URL}/{year}_FC{prefix}TOT_{suffix}_rdf.zip"
+    url = f"{PORTAL_BASE}{PORTAL[year]}"
 
     with tempfile.TemporaryDirectory() as tmp_dir:
-        rdf_path = download_and_extract_rdf(url, tmp_dir)
+        rdf_path = download_rdf(url, tmp_dir)
         if rdf_path is None:
             print(f"ERRORE: download fallito per {url}", file=sys.stderr)
             sys.exit(1)

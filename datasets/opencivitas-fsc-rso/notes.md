@@ -12,7 +12,7 @@
   dall'inventario catalog-watch (`out/so/inventory.parquet` / `registry/catalog.json`)
 - CSV con `;` come delimitatore e `,` come separatore decimale, header presente (filtrato dal clean via `componente IN (...)`)
 - shape long, una riga per componente di calcolo del fondo
-- source B: ZIP con workbook `Metadati_Enti_FSC_2025.xlsx` (support `opencivitas_fsc_enti_rso`)
+- source B: XLSX `Metadati_Enti_FSC_2025.xlsx` dal portale (support `opencivitas_fsc_enti_rso`)
 - source B: sheet `anagrafica_enti2025` (sheet_name statico, non templabile con {year})
 - chiave di join comune: `USERNAME`
 - 2019: mai pubblicato dalla fonte (gap confermato su docs e portale)
@@ -23,6 +23,12 @@
 - migrazione 2026-10: da `type: script` (preprocess.py, ZIP docs) a `http_file`
   per-anno sul portale — regressione verificata via run records `_runs/`
   (raw/clean/mart identici ai run precedenti basati su docs)
+- righe aggregate (15 regioni RSO + ITALIA) presenti nella fonte: marchiate nel
+  clean con `livello_territoriale`, escluse dal mart (`= 'comune'`)
+- join anagrafica **LEFT** (non scarta più i comuni fuori anagrafica): restano
+  con geografia NULL e `join_enti_ok=false` (2017: 24, 2023: 9, 2026: 0).
+  L'anagrafica è single-year 2025 → il recupero completo richiede un'anagrafica
+  multi-anno (follow-up)
 
 ## Anni
 

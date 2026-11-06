@@ -6,9 +6,9 @@ dataset:
   source_id: "opencivitas"
   tags: [finanza-pubblica, opencivitas, glossario]
   category: finanza-pubblica
-  years: [2015, 2016, 2017, 2018, 2019, 2021, 2022, 2023]
+  years: [2017, 2018, 2019, 2021, 2022, 2023]
   time_coverage:
-    start_year: 2015
+    start_year: 2017
     end_year: 2023
 
 raw:

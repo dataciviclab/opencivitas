@@ -32,8 +32,11 @@ WITH pivotted AS (
         MAX(CASE WHEN indicatore LIKE 'IND_POP02_SU_POPTOT_PCT%' THEN valore_num END) AS bambini0_2_pct,
         MAX(CASE WHEN indicatore LIKE 'INCIDENZA_POP_3_14_PERC%' THEN valore_num END) AS pop_3_14_pct
     FROM clean_input
+    -- Solo comuni: le righe aggregate (regioni, ITALIA) restano nel clean,
+    -- marcate da livello_territoriale.
     WHERE tipo_indicatore = 'IND'
       AND valore_num IS NOT NULL
+      AND livello_territoriale = 'comune'
     GROUP BY username, anno
 ),
 with_geo AS (

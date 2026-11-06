@@ -2,25 +2,27 @@
 
 ## Origine
 
-Fonte: [OpenCivitas](https://www.opencivitas.it/) (ANCI/Sogei).
-Dataset pubblicati come ZIP con CSV in formato EAV (USERNAME;Indicatore;Valore;Anomalia;Privacy).
-Catalogo completo via sitemap XML: 271 dataset totali.
+Fonte: [OpenCivitas](https://www.opencivitas.it/portale/open-data) (ANCI/Sogei).
+CSV in formato EAV (USERNAME;Indicatore;Valore;Anomalia;Privacy), scaricati
+direttamente dal portale Liferay (URL con UUID). Il vecchio `docs.opencivitas.it`
+è dismesso.
 
 ## Due ere
 
 - **2009-2013**: formato wide (spesa storica, fabbisogni), chiave = COMUNE_CAT_COD
-- **2015-2022**: formato EAV (indicatori e determinanti), chiave = USERNAME
-- **2023**: naming nuovo sul portale Liferay (CSV diretti, no ZIP, no prefisso FC,
-  sigle estese `AMMINISTR`/`TERR_VIAB`, suffisso `_01_IT`) — gestito nel preprocess
-  via `PORTAL_2023`; schema CSV identico agli anni precedenti
+- **2017-2022**: formato EAV (indicatori e determinanti), chiave = USERNAME
+- **2023**: naming nuovo sul portale Liferay (sigle estese `AMMINISTR`/`TERR_VIAB`,
+  suffisso `_01_IT`) — gestito nel preprocess via la mappa `PORTAL`; schema CSV
+  identico agli anni precedenti
 
-Questo candidate copre la **seconda era**: 7 ambiti × 8 anni (2015-2023, salto 2020) in formato EAV.
+Questo candidate copre la **seconda era**: 7 ambiti × 6 anni (2017-2023, salto 2020) in formato EAV.
+(2015-2016 fuori copertura: il portale parte dal 2017.)
 
 ## Pipeline
 
 ```
 preprocess.py {year} raw_input.csv
-  → scarica 7 ZIP, estrae CSV, unisce con colonna ambito
+  → scarica i 7 CSV ambito dal portale, unisce con colonna ambito
   
 clean.sql
   → normalizza username, anno, indicatore
@@ -37,7 +39,7 @@ mart_sintesi
   → statistiche per provincia/regione/nazionale
 
 mart_trend (opzionale)
-  → CAGR indicatori su 7 anni (glob multi-anno)
+  → CAGR indicatori su 6 anni (glob multi-anno)
 ```
 
 ## Support dataset
@@ -52,9 +54,11 @@ mart_trend (opzionale)
 
 - Drop 10-12%: valori testuali attesi (descrizioni, codici anomalia)
 - Enti riconosciuti: 99,8%
-- Glossario coperto: ~100%
-- Match ISTAT: 95-98% (crescente da 2015 a 2022, media ~96,5%)
+- Glossario coperto: ~100% (eccezione: `servizi_totali` 2018, metadati non pubblicati dalla fonte)
+- Match ISTAT: 95-98% (crescente da 2017 a 2023, media ~96,5%)
 - Duplicati: 0 (sulla chiave username+anno+ambito+indicatore)
+- Righe aggregate (regioni/ITALIA) presenti nella fonte: marchiate nel clean con
+  `livello_territoriale`, **escluse da `mart_comuni`** (`= 'comune'`)
 
 ## Placeholder toolkit
 

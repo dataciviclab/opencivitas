@@ -43,9 +43,20 @@ SELECT
   fsc.dotazione_finale_fsc,
   fsc.imu_tasi_standard,
   fsc.totale_risorse_storiche,
+  -- Livello territoriale: la fonte include righe aggregate (regioni, ITALIA)
+  -- mescolate ai comuni. Le marchiamo per non sommarle per errore.
+  CASE
+    WHEN fsc.username LIKE 'ZZ999ITA%' THEN 'nazionale'
+    WHEN fsc.username LIKE 'ZZ999REG%' THEN 'regione'
+    WHEN fsc.username LIKE 'ZZ999%' THEN 'altro'
+    ELSE 'comune'
+  END AS livello_territoriale,
   enti.username IS NOT NULL AS join_enti_ok
 FROM fsc
-INNER JOIN enti ON fsc.username = enti.username
+-- LEFT JOIN: i comuni assenti dall'anagrafica (fusioni/abolizioni) non vengono
+-- scartati; restano con geografia NULL e join_enti_ok = false. L'anagrafica è
+-- single-year 2025: il recupero completo richiede un'anagrafica multi-anno.
+LEFT JOIN enti ON fsc.username = enti.username
 WHERE fsc.username IS NOT NULL
 ORDER BY enti.regione, enti.provincia, enti.denominazione
 

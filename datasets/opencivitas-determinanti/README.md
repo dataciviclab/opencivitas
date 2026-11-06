@@ -1,6 +1,6 @@
 # opencivitas-determinanti
 
-**Spesa standard, spesa storica e performance scores dei comuni italiani (2015-2022)**
+**Spesa standard, spesa storica e performance scores dei comuni italiani (2017-2023)**
 
 ## Cosa fa
 
@@ -23,4 +23,4 @@ python preprocess.py 2022 raw_input.csv
 
 ## Fonte
 
-[OpenCivitas](https://www.opencivitas.it/it/open-data) — CC BY 4.0
+[OpenCivitas](https://www.opencivitas.it/portale/open-data) — CC BY 4.0

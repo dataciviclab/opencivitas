@@ -1,19 +1,18 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "repo": "opencivitas",
   "source_repo": "dataciviclab/opencivitas",
-  "updated_at": "2026-11-06",
+  "updated_at": "2026-11-25",
+  "gcs": {
+    "clean": "year",
+    "prefix": "opencivitas/"
+  },
   "datasets": [
     {
       "slug": "opencivitas_determinanti",
       "name": "Opencivitas Determinanti",
       "description": "Spesa standard vs storica, performance scores e determinanti demografiche per comune RSO — il TOT aggregato dal RDF OpenCivitas.",
-      "source": "https://www.opencivitas.it/",
       "source_id": "opencivitas",
-      "period": {
-        "start": 2017,
-        "end": 2023
-      },
       "tags": [
         "finanza-pubblica",
         "opencivitas",
@@ -22,244 +21,214 @@
         "performance"
       ],
       "category": "finanza-pubblica",
+      "period": {
+        "start": 2017,
+        "end": 2023
+      },
+      "partitions": {
+        "2017": 6657,
+        "2018": 6636,
+        "2019": 6597,
+        "2021": 6595,
+        "2022": 6585,
+        "2023": 6587
+      },
       "columns": [
         {
           "name": "anno",
           "type": "INTEGER",
           "role": "dimension",
-          "description": "",
           "semantic_type": "year"
         },
         {
           "name": "username",
           "type": "VARCHAR",
           "role": "dimension",
-          "description": "",
           "semantic_type": "sogei_code"
         },
         {
           "name": "comune",
           "type": "VARCHAR",
           "role": "dimension",
-          "description": "",
           "semantic_type": "municipality_name"
         },
         {
           "name": "provincia",
           "type": "VARCHAR",
           "role": "dimension",
-          "description": "",
           "semantic_type": "province_code"
         },
         {
           "name": "regione",
           "type": "VARCHAR",
           "role": "dimension",
-          "description": "",
           "semantic_type": "region_code"
         },
         {
           "name": "regione_istat_cod",
           "type": "INTEGER",
           "role": "dimension",
-          "description": "",
           "semantic_type": "region_code"
         },
         {
           "name": "spesa_standard",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "spesa_standard_procapite",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "spesa_storica",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "spesa_storica_procapite",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "rapporto_standard_storico",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "livello_servizi",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "livello_spesa",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "coord_servizi",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "coord_spesa",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "flag_spesa_su_servizi_su",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "flag_spesa_su_servizi_giu",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "flag_spesa_giu_servizi_giu",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "flag_spesa_giu_servizi_su",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "flag_non_valutabile",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "costo_lavoro_procapite",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "dipendenti_x1000ab",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "diff_servizi_pct",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "det_popolazione",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "det_densita",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "det_ultra_75",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "det_pop_straniera",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "det_pop_15_64",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "det_pop_65_74",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "det_deprivazione",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "det_pendolari",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "det_immobili",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "det_fattore_contesto",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "livello_territoriale",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "join_enti_ok",
           "type": "BOOLEAN",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         }
       ],
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-clean/opencivitas/opencivitas_determinanti/*/opencivitas_determinanti_*_clean.parquet",
-        "multi_file": true
-      },
-      "stage": "incubating",
       "mart_refs": [
         "opencivitas_determinanti__mart_determinanti"
-      ]
+      ],
+      "last_run": {
+        "at": "2026-11-25T11:56:09.233793+00:00",
+        "year": 2023,
+        "status": "SUCCESS"
+      }
     },
     {
       "slug": "opencivitas_fprcm",
       "name": "Opencivitas Fprcm",
-      "description": "",
-      "source": "",
       "source_id": "opencivitas",
-      "period": {
-        "start": 2022,
-        "end": 2026
-      },
       "tags": [
         "finanza-pubblica",
         "opencivitas",
@@ -267,117 +236,107 @@
         "province"
       ],
       "category": "finanza-pubblica",
+      "period": {
+        "start": 2022,
+        "end": 2026
+      },
+      "partitions": {
+        "2022": 86,
+        "2023": 86,
+        "2024": 86,
+        "2025": 86,
+        "2026": 86
+      },
       "columns": [
         {
           "name": "anno",
           "type": "INTEGER",
           "role": "dimension",
-          "description": "",
           "semantic_type": "year"
         },
         {
           "name": "username",
           "type": "VARCHAR",
           "role": "dimension",
-          "description": "",
           "semantic_type": "sogei_code"
         },
         {
           "name": "ente",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "tipologia_ente",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "provincia",
           "type": "VARCHAR",
           "role": "dimension",
-          "description": "",
           "semantic_type": "province_code"
         },
         {
           "name": "regione",
           "type": "VARCHAR",
           "role": "dimension",
-          "description": "",
           "semantic_type": "region_code"
         },
         {
           "name": "provincia_istat_cod",
           "type": "INTEGER",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "regione_istat_cod",
           "type": "INTEGER",
           "role": "dimension",
-          "description": "",
           "semantic_type": "region_code"
         },
         {
           "name": "popolazione",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "capacita_fiscale",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "fabbisogni_standard",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "contributo_fondamentali_prov",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "totale_contributi_fondi_correnti",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "join_enti_ok",
           "type": "BOOLEAN",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         }
       ],
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-clean/opencivitas/opencivitas_fprcm/*/opencivitas_fprcm_*_clean.parquet",
-        "multi_file": true
-      },
-      "stage": "incubating",
       "mart_refs": [
         "opencivitas_fprcm__mart_compose_province"
-      ]
+      ],
+      "last_run": {
+        "at": "2026-11-25T11:58:04.380172+00:00",
+        "year": 2026,
+        "status": "SUCCESS"
+      }
     },
     {
       "slug": "opencivitas_fprcm_enti",
       "name": "Opencivitas Fprcm Enti",
-      "description": "",
-      "source": "",
       "source_id": "opencivitas",
-      "period": {
-        "start": 2026,
-        "end": 2026
-      },
       "tags": [
         "finanza-pubblica",
         "opencivitas",
@@ -386,74 +345,68 @@
         "province"
       ],
       "category": "finanza-pubblica",
+      "period": {
+        "start": 2026,
+        "end": 2026
+      },
+      "partitions": {
+        "2026": 86
+      },
       "columns": [
         {
           "name": "username",
           "type": "VARCHAR",
           "role": "dimension",
-          "description": "",
           "semantic_type": "sogei_code"
         },
         {
           "name": "denominazione",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "tipologia_ente",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "provincia",
           "type": "VARCHAR",
           "role": "dimension",
-          "description": "",
           "semantic_type": "province_code"
         },
         {
           "name": "regione",
           "type": "VARCHAR",
           "role": "dimension",
-          "description": "",
           "semantic_type": "region_code"
         },
         {
           "name": "provincia_istat_cod",
           "type": "INTEGER",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "regione_istat_cod",
           "type": "INTEGER",
           "role": "dimension",
-          "description": "",
           "semantic_type": "region_code"
         }
       ],
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-clean/opencivitas/opencivitas_fprcm_enti/2026/opencivitas_fprcm_enti_2026_clean.parquet",
-        "multi_file": false
-      },
-      "stage": "incubating",
       "mart_refs": [
         "opencivitas_fprcm_enti__mart_enti"
-      ]
+      ],
+      "last_run": {
+        "at": "2026-11-25T11:53:45.261260+00:00",
+        "year": 2026,
+        "status": "SUCCESS"
+      }
     },
     {
       "slug": "opencivitas_fsc_enti_rso",
       "name": "Opencivitas Fsc Enti Rso",
       "description": "Anagrafica enti RSO con codice Sogei, provincia e regione — tavola di supporto per join con dataset principali.",
-      "source": "https://www.opencivitas.it/",
       "source_id": "opencivitas",
-      "period": {
-        "start": 2025,
-        "end": 2025
-      },
       "tags": [
         "finanza-pubblica",
         "opencivitas",
@@ -461,378 +414,362 @@
         "enti"
       ],
       "category": "finanza-pubblica",
+      "period": {
+        "start": 2025,
+        "end": 2025
+      },
+      "partitions": {
+        "2025": 6573
+      },
       "columns": [
         {
           "name": "username",
           "type": "VARCHAR",
           "role": "dimension",
-          "description": "",
           "semantic_type": "sogei_code"
         },
         {
           "name": "denominazione",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "provincia",
           "type": "VARCHAR",
           "role": "dimension",
-          "description": "",
           "semantic_type": "province_code"
         },
         {
           "name": "regione",
           "type": "VARCHAR",
           "role": "dimension",
-          "description": "",
           "semantic_type": "region_code"
         },
         {
           "name": "regione_istat_cod",
           "type": "INTEGER",
           "role": "dimension",
-          "description": "",
           "semantic_type": "region_code"
         }
       ],
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-clean/opencivitas/opencivitas_fsc_enti_rso/2025/opencivitas_fsc_enti_rso_2025_clean.parquet",
-        "multi_file": false
-      },
-      "stage": "incubating",
       "mart_refs": [
         "opencivitas_fsc_enti_rso__mart_enti"
-      ]
+      ],
+      "last_run": {
+        "at": "2026-11-25T11:53:41.985709+00:00",
+        "year": 2025,
+        "status": "SUCCESS"
+      }
     },
     {
       "slug": "opencivitas_fsc_rso",
       "name": "Opencivitas Fsc Rso",
       "description": "Finanza comunale FSC: capacità fiscale, fondo perequativo e dotazione finale per comune RSO.",
-      "source": "https://www.opencivitas.it/",
       "source_id": "opencivitas",
-      "period": {
-        "start": 2017,
-        "end": 2026
-      },
       "tags": [
         "finanza-pubblica",
         "opencivitas",
         "fsc"
       ],
       "category": "finanza-pubblica",
+      "period": {
+        "start": 2017,
+        "end": 2026
+      },
+      "partitions": {
+        "2017": 6581,
+        "2018": 6581,
+        "2020": 6581,
+        "2021": 6581,
+        "2022": 6581,
+        "2023": 6578,
+        "2024": 6578,
+        "2025": 6573,
+        "2026": 6572
+      },
       "columns": [
         {
           "name": "anno",
           "type": "INTEGER",
           "role": "dimension",
-          "description": "",
           "semantic_type": "year"
         },
         {
           "name": "username",
           "type": "VARCHAR",
           "role": "dimension",
-          "description": "",
           "semantic_type": "sogei_code"
         },
         {
           "name": "comune",
           "type": "VARCHAR",
           "role": "dimension",
-          "description": "",
           "semantic_type": "municipality_name"
         },
         {
           "name": "provincia",
           "type": "VARCHAR",
           "role": "dimension",
-          "description": "",
           "semantic_type": "province_code"
         },
         {
           "name": "regione",
           "type": "VARCHAR",
           "role": "dimension",
-          "description": "",
           "semantic_type": "region_code"
         },
         {
           "name": "regione_istat_cod",
           "type": "INTEGER",
           "role": "dimension",
-          "description": "",
           "semantic_type": "region_code"
         },
         {
           "name": "popolazione",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "capacita_fiscale",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "fondo_perequativo",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "dotazione_finale_fsc",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "imu_tasi_standard",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "totale_risorse_storiche",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "livello_territoriale",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "join_enti_ok",
           "type": "BOOLEAN",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         }
       ],
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-clean/opencivitas/opencivitas_fsc_rso/*/opencivitas_fsc_rso_*_clean.parquet",
-        "multi_file": true
-      },
-      "stage": "incubating",
       "mart_refs": [
         "opencivitas_fsc_rso__mart_compose_comuni"
-      ]
+      ],
+      "last_run": {
+        "at": "2026-11-25T11:57:48.448362+00:00",
+        "year": 2026,
+        "status": "SUCCESS"
+      }
     },
     {
       "slug": "opencivitas_glossario",
       "name": "Opencivitas Glossario",
       "description": "Metadati indicatori OpenCivitas: codice, descrizione, tipo, categoria e funzione per ogni indicatore.",
-      "source": "https://www.opencivitas.it/",
       "source_id": "opencivitas",
-      "period": {
-        "start": 2017,
-        "end": 2023
-      },
       "tags": [
         "finanza-pubblica",
         "opencivitas",
         "glossario"
       ],
       "category": "finanza-pubblica",
+      "period": {
+        "start": 2017,
+        "end": 2023
+      },
+      "partitions": {
+        "2017": 625,
+        "2018": 524,
+        "2019": 626,
+        "2021": 602,
+        "2022": 582,
+        "2023": 578
+      },
       "columns": [
         {
           "name": "codice_indicatore",
           "type": "VARCHAR",
           "role": "dimension",
-          "description": "",
           "semantic_type": "indicatore_code"
         },
         {
           "name": "descrizione",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "tipo",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "categoria",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "funzione",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "ordine",
           "type": "INTEGER",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "anno",
           "type": "INTEGER",
           "role": "dimension",
-          "description": "",
           "semantic_type": "year"
         },
         {
           "name": "ambito",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         }
       ],
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-clean/opencivitas/opencivitas_glossario/*/opencivitas_glossario_*_clean.parquet",
-        "multi_file": true
-      },
-      "stage": "incubating",
       "mart_refs": [
         "opencivitas_glossario__mart_metadati"
-      ]
+      ],
+      "last_run": {
+        "at": "2026-11-25T11:54:10.507443+00:00",
+        "year": 2023,
+        "status": "SUCCESS"
+      }
     },
     {
       "slug": "opencivitas_indicatori",
       "name": "Opencivitas Indicatori",
       "description": "Indicatori di servizio dei comuni RSO su 7 ambiti (rifiuti, istruzione, sociale, viabilità, amministrazione) — formato EAV.",
-      "source": "https://www.opencivitas.it/",
       "source_id": "opencivitas",
-      "period": {
-        "start": 2017,
-        "end": 2023
-      },
       "tags": [
         "finanza-pubblica",
         "opencivitas",
         "indicatori"
       ],
       "category": "finanza-pubblica",
+      "period": {
+        "start": 2017,
+        "end": 2023
+      },
+      "partitions": {
+        "2017": 2866682,
+        "2018": 2897045,
+        "2019": 2907288,
+        "2021": 2726971,
+        "2022": 2670752,
+        "2023": 2677968
+      },
       "columns": [
         {
           "name": "username",
           "type": "VARCHAR",
           "role": "dimension",
-          "description": "",
           "semantic_type": "sogei_code"
         },
         {
           "name": "anno",
           "type": "INTEGER",
           "role": "dimension",
-          "description": "",
           "semantic_type": "year"
         },
         {
           "name": "ambito",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "indicatore",
           "type": "VARCHAR",
           "role": "dimension",
-          "description": "",
           "semantic_type": "indicatore_code"
         },
         {
           "name": "valore_num",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "descrizione_indicatore",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "tipo_indicatore",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "categoria_indicatore",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "funzione_indicatore",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "denominazione",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "provincia",
           "type": "VARCHAR",
           "role": "dimension",
-          "description": "",
           "semantic_type": "province_code"
         },
         {
           "name": "regione",
           "type": "VARCHAR",
           "role": "dimension",
-          "description": "",
           "semantic_type": "region_code"
         },
         {
           "name": "regione_istat_cod",
           "type": "INTEGER",
           "role": "dimension",
-          "description": "",
           "semantic_type": "region_code"
         },
         {
           "name": "livello_territoriale",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "join_enti_ok",
           "type": "BOOLEAN",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "join_metadati_ok",
           "type": "BOOLEAN",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         }
       ],
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-clean/opencivitas/opencivitas_indicatori/*/opencivitas_indicatori_*_clean.parquet",
-        "multi_file": true
-      },
-      "stage": "incubating",
       "mart_refs": [
         "opencivitas_indicatori__mart_indicatori",
         "opencivitas_indicatori__mart_comuni"
-      ]
+      ],
+      "last_run": {
+        "at": "2026-11-25T12:13:22.344750+00:00",
+        "year": 2023,
+        "status": "SUCCESS"
+      }
     }
   ],
   "marts": [
@@ -840,661 +777,67 @@
       "slug": "opencivitas_determinanti__mart_determinanti",
       "dataset": "opencivitas_determinanti",
       "table": "mart_determinanti",
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-mart/opencivitas/opencivitas_determinanti/*/mart_determinanti.parquet",
-        "multi_file": true
-      }
+      "layout": "glob"
     },
     {
       "slug": "opencivitas_fprcm__mart_compose_province",
       "dataset": "opencivitas_fprcm",
       "table": "mart_compose_province",
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-mart/opencivitas/opencivitas_fprcm/*/mart_compose_province.parquet",
-        "multi_file": true
-      }
+      "layout": "glob",
+      "primary_key": [
+        "username",
+        "anno"
+      ]
     },
     {
       "slug": "opencivitas_fprcm_enti__mart_enti",
       "dataset": "opencivitas_fprcm_enti",
       "table": "mart_enti",
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-mart/opencivitas/opencivitas_fprcm_enti/2026/mart_enti.parquet",
-        "multi_file": false
-      }
+      "layout": "year",
+      "year": 2026,
+      "primary_key": [
+        "username"
+      ]
     },
     {
       "slug": "opencivitas_fsc_enti_rso__mart_enti",
       "dataset": "opencivitas_fsc_enti_rso",
       "table": "mart_enti",
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-mart/opencivitas/opencivitas_fsc_enti_rso/2025/mart_enti.parquet",
-        "multi_file": false
-      }
+      "layout": "year",
+      "year": 2025,
+      "primary_key": [
+        "username"
+      ]
     },
     {
       "slug": "opencivitas_fsc_rso__mart_compose_comuni",
       "dataset": "opencivitas_fsc_rso",
       "table": "mart_compose_comuni",
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-mart/opencivitas/opencivitas_fsc_rso/*/mart_compose_comuni.parquet",
-        "multi_file": true
-      }
+      "layout": "glob",
+      "primary_key": [
+        "username",
+        "anno"
+      ]
     },
     {
       "slug": "opencivitas_glossario__mart_metadati",
       "dataset": "opencivitas_glossario",
       "table": "mart_metadati",
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-mart/opencivitas/opencivitas_glossario/*/mart_metadati.parquet",
-        "multi_file": true
-      }
+      "layout": "glob"
     },
     {
       "slug": "opencivitas_indicatori__mart_comuni",
       "dataset": "opencivitas_indicatori",
       "table": "mart_comuni",
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-mart/opencivitas/opencivitas_indicatori/*/mart_comuni.parquet",
-        "multi_file": true
-      }
+      "layout": "glob"
     },
     {
       "slug": "opencivitas_indicatori__mart_indicatori",
       "dataset": "opencivitas_indicatori",
       "table": "mart_indicatori",
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-mart/opencivitas/opencivitas_indicatori/*/mart_indicatori.parquet",
-        "multi_file": true
-      }
+      "layout": "glob"
     }
   ],
-  "signals": [
-    {
-      "id": "opencivitas_determinanti",
-      "source_id": "opencivitas",
-      "status": "ok",
-      "label": "opencivitas_determinanti",
-      "detail": "anni 2017-2023 — mart: si",
-      "action": "",
-      "run": {
-        "run_id": "20261106T102920Z_945a9f8f",
-        "year": 2023,
-        "status": "SUCCESS",
-        "quality_score": {
-          "raw": 100,
-          "clean": 95,
-          "mart": 100
-        },
-        "output_rows": {
-          "raw": 6587,
-          "clean": 6587,
-          "mart": 6557
-        },
-        "output_bytes": {
-          "raw": 5536417,
-          "clean": 925376,
-          "mart": 940687
-        },
-        "started_at": "2026-11-06T10:29:20.176793+00:00",
-        "finished_at": "2026-11-06T10:29:42.038824+00:00",
-        "duration_seconds": 21.862
-      }
-    },
-    {
-      "id": "opencivitas_fprcm",
-      "source_id": "opencivitas",
-      "status": "ok",
-      "label": "opencivitas_fprcm",
-      "detail": "anni 2022-2026 — mart: si",
-      "action": "",
-      "run": {
-        "run_id": "20261106T103103Z_689ba456",
-        "year": 2026,
-        "status": "SUCCESS",
-        "quality_score": {
-          "raw": 100,
-          "clean": 100,
-          "mart": 100
-        },
-        "output_rows": {
-          "raw": 1672,
-          "clean": 86,
-          "mart": 86
-        },
-        "output_bytes": {
-          "raw": 97033,
-          "clean": 7594,
-          "mart": 10145
-        },
-        "started_at": "2026-11-06T10:31:03.659693+00:00",
-        "finished_at": "2026-11-06T10:31:04.736035+00:00",
-        "duration_seconds": 1.076
-      }
-    },
-    {
-      "id": "opencivitas_fsc_rso",
-      "source_id": "opencivitas",
-      "status": "ok",
-      "label": "opencivitas_fsc_rso",
-      "detail": "anni 2017-2026 — mart: si",
-      "action": "",
-      "run": {
-        "run_id": "20261106T103049Z_8b043459",
-        "year": 2026,
-        "status": "SUCCESS",
-        "quality_score": {
-          "raw": 100,
-          "clean": 100,
-          "mart": 100
-        },
-        "output_rows": {
-          "raw": 184016,
-          "clean": 6572,
-          "mart": 6556
-        },
-        "output_bytes": {
-          "raw": 8861581,
-          "clean": 255509,
-          "mart": 403190
-        },
-        "started_at": "2026-11-06T10:30:49.580797+00:00",
-        "finished_at": "2026-11-06T10:30:57.673923+00:00",
-        "duration_seconds": 8.093
-      }
-    },
-    {
-      "id": "opencivitas_indicatori",
-      "source_id": "opencivitas",
-      "status": "ok",
-      "label": "opencivitas_indicatori",
-      "detail": "anni 2017-2023 — mart: si",
-      "action": "",
-      "run": {
-        "run_id": "20261106T104438Z_b176afe8",
-        "year": 2023,
-        "status": "SUCCESS",
-        "quality_score": {
-          "raw": 100,
-          "clean": 100,
-          "mart": 100
-        },
-        "output_rows": {
-          "raw": 2964150,
-          "clean": 2677968,
-          "mart": 6867
-        },
-        "output_bytes": {
-          "raw": 181049884,
-          "clean": 12242370,
-          "mart": 710147
-        },
-        "started_at": "2026-11-06T10:44:38.602989+00:00",
-        "finished_at": "2026-11-06T10:47:07.941682+00:00",
-        "duration_seconds": 149.339
-      }
-    },
-    {
-      "id": "opencivitas_fprcm_enti",
-      "source_id": "opencivitas",
-      "status": "ok",
-      "label": "opencivitas_fprcm_enti",
-      "detail": "anno 2026 — mart: si",
-      "action": "",
-      "run": {
-        "run_id": "20261106T102708Z_6b8738c6",
-        "year": 2026,
-        "status": "SUCCESS",
-        "quality_score": {
-          "raw": 100,
-          "clean": 95,
-          "mart": 100
-        },
-        "output_rows": {
-          "clean": 86,
-          "mart": 86
-        },
-        "output_bytes": {
-          "raw": 13304,
-          "clean": 3456,
-          "mart": 3464
-        },
-        "started_at": "2026-11-06T10:27:08.102735+00:00",
-        "finished_at": "2026-11-06T10:27:09.244700+00:00",
-        "duration_seconds": 1.142
-      }
-    },
-    {
-      "id": "opencivitas_fsc_enti_rso",
-      "source_id": "opencivitas",
-      "status": "ok",
-      "label": "opencivitas_fsc_enti_rso",
-      "detail": "anno 2025 — mart: si",
-      "action": "",
-      "run": {
-        "run_id": "20261106T102704Z_20a09847",
-        "year": 2025,
-        "status": "SUCCESS",
-        "quality_score": {
-          "raw": 100,
-          "clean": 100,
-          "mart": 100
-        },
-        "output_rows": {
-          "clean": 6573,
-          "mart": 6573
-        },
-        "output_bytes": {
-          "raw": 294463,
-          "clean": 85837,
-          "mart": 87422
-        },
-        "started_at": "2026-11-06T10:27:04.656407+00:00",
-        "finished_at": "2026-11-06T10:27:07.092795+00:00",
-        "duration_seconds": 2.436
-      }
-    },
-    {
-      "id": "opencivitas_glossario",
-      "source_id": "opencivitas",
-      "status": "ok",
-      "label": "opencivitas_glossario",
-      "detail": "anni 2017-2023 — mart: si",
-      "action": "",
-      "run": {
-        "run_id": "20261106T102732Z_09dc648d",
-        "year": 2023,
-        "status": "SUCCESS",
-        "quality_score": {
-          "raw": 100,
-          "clean": 100,
-          "mart": 100
-        },
-        "output_rows": {
-          "raw": 578,
-          "clean": 578,
-          "mart": 578
-        },
-        "output_bytes": {
-          "raw": 62207,
-          "clean": 10355,
-          "mart": 10355
-        },
-        "started_at": "2026-11-06T10:27:32.549705+00:00",
-        "finished_at": "2026-11-06T10:27:37.032605+00:00",
-        "duration_seconds": 4.483
-      }
-    }
-  ],
-  "codelists": [],
-  "entities": {
-    "entities": {
-      "Comune": {
-        "entity": "Comune",
-        "label": "Comune (ISTAT)",
-        "datasets": [
-          {
-            "slug": "opencivitas_determinanti",
-            "name": "Opencivitas Determinanti",
-            "column": "comune",
-            "semantic_type": "municipality_name"
-          },
-          {
-            "slug": "opencivitas_fsc_rso",
-            "name": "Opencivitas Fsc Rso",
-            "column": "comune",
-            "semantic_type": "municipality_name"
-          }
-        ],
-        "types": {
-          "municipality_name": 2
-        }
-      },
-      "Ente": {
-        "entity": "Ente",
-        "label": "Ente pubblico",
-        "datasets": [
-          {
-            "slug": "opencivitas_determinanti",
-            "name": "Opencivitas Determinanti",
-            "column": "username",
-            "semantic_type": "sogei_code"
-          },
-          {
-            "slug": "opencivitas_fprcm",
-            "name": "Opencivitas Fprcm",
-            "column": "username",
-            "semantic_type": "sogei_code"
-          },
-          {
-            "slug": "opencivitas_fprcm_enti",
-            "name": "Opencivitas Fprcm Enti",
-            "column": "username",
-            "semantic_type": "sogei_code"
-          },
-          {
-            "slug": "opencivitas_fsc_enti_rso",
-            "name": "Opencivitas Fsc Enti Rso",
-            "column": "username",
-            "semantic_type": "sogei_code"
-          },
-          {
-            "slug": "opencivitas_fsc_rso",
-            "name": "Opencivitas Fsc Rso",
-            "column": "username",
-            "semantic_type": "sogei_code"
-          },
-          {
-            "slug": "opencivitas_indicatori",
-            "name": "Opencivitas Indicatori",
-            "column": "username",
-            "semantic_type": "sogei_code"
-          }
-        ],
-        "types": {
-          "sogei_code": 6
-        }
-      },
-      "Indicatore": {
-        "entity": "Indicatore",
-        "label": "Indicatore",
-        "datasets": [
-          {
-            "slug": "opencivitas_glossario",
-            "name": "Opencivitas Glossario",
-            "column": "codice_indicatore",
-            "semantic_type": "indicatore_code"
-          },
-          {
-            "slug": "opencivitas_indicatori",
-            "name": "Opencivitas Indicatori",
-            "column": "indicatore",
-            "semantic_type": "indicatore_code"
-          }
-        ],
-        "types": {
-          "indicatore_code": 2
-        }
-      },
-      "Provincia": {
-        "entity": "Provincia",
-        "label": "Provincia",
-        "datasets": [
-          {
-            "slug": "opencivitas_determinanti",
-            "name": "Opencivitas Determinanti",
-            "column": "provincia",
-            "semantic_type": "province_code"
-          },
-          {
-            "slug": "opencivitas_fprcm",
-            "name": "Opencivitas Fprcm",
-            "column": "provincia",
-            "semantic_type": "province_code"
-          },
-          {
-            "slug": "opencivitas_fprcm_enti",
-            "name": "Opencivitas Fprcm Enti",
-            "column": "provincia",
-            "semantic_type": "province_code"
-          },
-          {
-            "slug": "opencivitas_fsc_enti_rso",
-            "name": "Opencivitas Fsc Enti Rso",
-            "column": "provincia",
-            "semantic_type": "province_code"
-          },
-          {
-            "slug": "opencivitas_fsc_rso",
-            "name": "Opencivitas Fsc Rso",
-            "column": "provincia",
-            "semantic_type": "province_code"
-          },
-          {
-            "slug": "opencivitas_indicatori",
-            "name": "Opencivitas Indicatori",
-            "column": "provincia",
-            "semantic_type": "province_code"
-          }
-        ],
-        "types": {
-          "province_code": 6
-        }
-      },
-      "Regione": {
-        "entity": "Regione",
-        "label": "Regione",
-        "datasets": [
-          {
-            "slug": "opencivitas_determinanti",
-            "name": "Opencivitas Determinanti",
-            "column": "regione",
-            "semantic_type": "region_code"
-          },
-          {
-            "slug": "opencivitas_determinanti",
-            "name": "Opencivitas Determinanti",
-            "column": "regione_istat_cod",
-            "semantic_type": "region_code"
-          },
-          {
-            "slug": "opencivitas_fprcm",
-            "name": "Opencivitas Fprcm",
-            "column": "regione",
-            "semantic_type": "region_code"
-          },
-          {
-            "slug": "opencivitas_fprcm",
-            "name": "Opencivitas Fprcm",
-            "column": "regione_istat_cod",
-            "semantic_type": "region_code"
-          },
-          {
-            "slug": "opencivitas_fprcm_enti",
-            "name": "Opencivitas Fprcm Enti",
-            "column": "regione",
-            "semantic_type": "region_code"
-          },
-          {
-            "slug": "opencivitas_fprcm_enti",
-            "name": "Opencivitas Fprcm Enti",
-            "column": "regione_istat_cod",
-            "semantic_type": "region_code"
-          },
-          {
-            "slug": "opencivitas_fsc_enti_rso",
-            "name": "Opencivitas Fsc Enti Rso",
-            "column": "regione",
-            "semantic_type": "region_code"
-          },
-          {
-            "slug": "opencivitas_fsc_enti_rso",
-            "name": "Opencivitas Fsc Enti Rso",
-            "column": "regione_istat_cod",
-            "semantic_type": "region_code"
-          },
-          {
-            "slug": "opencivitas_fsc_rso",
-            "name": "Opencivitas Fsc Rso",
-            "column": "regione",
-            "semantic_type": "region_code"
-          },
-          {
-            "slug": "opencivitas_fsc_rso",
-            "name": "Opencivitas Fsc Rso",
-            "column": "regione_istat_cod",
-            "semantic_type": "region_code"
-          },
-          {
-            "slug": "opencivitas_indicatori",
-            "name": "Opencivitas Indicatori",
-            "column": "regione",
-            "semantic_type": "region_code"
-          },
-          {
-            "slug": "opencivitas_indicatori",
-            "name": "Opencivitas Indicatori",
-            "column": "regione_istat_cod",
-            "semantic_type": "region_code"
-          }
-        ],
-        "types": {
-          "region_code": 12
-        }
-      },
-      "Tempo": {
-        "entity": "Tempo",
-        "label": "Tempo / data",
-        "datasets": [
-          {
-            "slug": "opencivitas_determinanti",
-            "name": "Opencivitas Determinanti",
-            "column": "anno",
-            "semantic_type": "year"
-          },
-          {
-            "slug": "opencivitas_fprcm",
-            "name": "Opencivitas Fprcm",
-            "column": "anno",
-            "semantic_type": "year"
-          },
-          {
-            "slug": "opencivitas_fsc_rso",
-            "name": "Opencivitas Fsc Rso",
-            "column": "anno",
-            "semantic_type": "year"
-          },
-          {
-            "slug": "opencivitas_glossario",
-            "name": "Opencivitas Glossario",
-            "column": "anno",
-            "semantic_type": "year"
-          },
-          {
-            "slug": "opencivitas_indicatori",
-            "name": "Opencivitas Indicatori",
-            "column": "anno",
-            "semantic_type": "year"
-          }
-        ],
-        "types": {
-          "year": 5
-        }
-      }
-    },
-    "bridges": [
-      {
-        "from": {
-          "entity": "Ente",
-          "dataset": "opencivitas_determinanti",
-          "via": "sogei_code"
-        },
-        "to": {
-          "entity": "Comune",
-          "bridge": "opencivitas_fsc_enti_rso",
-          "on": "username",
-          "semantic_type": "municipality_name"
-        }
-      },
-      {
-        "from": {
-          "entity": "Ente",
-          "dataset": "opencivitas_fprcm",
-          "via": "sogei_code"
-        },
-        "to": {
-          "entity": "Comune",
-          "bridge": "opencivitas_fsc_enti_rso",
-          "on": "username",
-          "semantic_type": "municipality_name"
-        }
-      },
-      {
-        "from": {
-          "entity": "Ente",
-          "dataset": "opencivitas_fprcm_enti",
-          "via": "sogei_code"
-        },
-        "to": {
-          "entity": "Comune",
-          "bridge": "opencivitas_fsc_enti_rso",
-          "on": "username",
-          "semantic_type": "municipality_name"
-        }
-      },
-      {
-        "from": {
-          "entity": "Ente",
-          "dataset": "opencivitas_fsc_enti_rso",
-          "via": "sogei_code"
-        },
-        "to": {
-          "entity": "Comune",
-          "bridge": "opencivitas_fsc_enti_rso",
-          "on": "username",
-          "semantic_type": "municipality_name"
-        }
-      },
-      {
-        "from": {
-          "entity": "Ente",
-          "dataset": "opencivitas_fsc_rso",
-          "via": "sogei_code"
-        },
-        "to": {
-          "entity": "Comune",
-          "bridge": "opencivitas_fsc_enti_rso",
-          "on": "username",
-          "semantic_type": "municipality_name"
-        }
-      },
-      {
-        "from": {
-          "entity": "Indicatore",
-          "dataset": "opencivitas_glossario",
-          "via": "indicatore_code"
-        },
-        "to": {
-          "entity": "Progetto",
-          "bridge": "pnrr_indicatori_target",
-          "on": "cup",
-          "semantic_type": "cup_code"
-        }
-      },
-      {
-        "from": {
-          "entity": "Ente",
-          "dataset": "opencivitas_indicatori",
-          "via": "sogei_code"
-        },
-        "to": {
-          "entity": "Comune",
-          "bridge": "opencivitas_fsc_enti_rso",
-          "on": "username",
-          "semantic_type": "municipality_name"
-        }
-      },
-      {
-        "from": {
-          "entity": "Indicatore",
-          "dataset": "opencivitas_indicatori",
-          "via": "indicatore_code"
-        },
-        "to": {
-          "entity": "Progetto",
-          "bridge": "pnrr_indicatori_target",
-          "on": "cup",
-          "semantic_type": "cup_code"
-        }
-      }
-    ]
-  }
+  "checks": [],
+  "codelists": []
 }
